@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T14:49:15+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">GitHub Profile Trophy: enhance your profile</title><link href="http://localhost:4000/blog/GitHub-Profile-Trophy" rel="alternate" type="text/html" title="GitHub Profile Trophy: enhance your profile" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/GitHub-Profile-Trophy</id><content type="html" xml:base="http://localhost:4000/blog/GitHub-Profile-Trophy"><![CDATA[<p>GitHub Profile Trophy is a service that enhances your GitHub profile with visual trophies showcasing your achievements, 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T18:51:22+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">GitHub Profile Trophy: enhance your profile</title><link href="http://localhost:4000/blog/GitHub-Profile-Trophy" rel="alternate" type="text/html" title="GitHub Profile Trophy: enhance your profile" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/GitHub-Profile-Trophy</id><content type="html" xml:base="http://localhost:4000/blog/GitHub-Profile-Trophy"><![CDATA[<p>GitHub Profile Trophy is a service that enhances your GitHub profile with visual trophies showcasing your achievements, 
 such as the number of repositories and open-source contributions. To use it, visit the GitHub Profile Trophy website, 
 enter your account name, and get the code to insert into your README. You can customize the trophies’ theme, 
 number of columns, and categories to make your profile more engaging and visually appealing.</p>
@@ -473,4 +473,35 @@ Projects will be showcased in a card-list format where each card will contain</p
   <h1 id="browse-to-httplocalhost4000">Browse to <a href="http://localhost:4000/" target="_blank"><code class="language-plaintext highlighter-rouge">http://localhost:4000/</code></a></h1>
 </blockquote>
 
-<h6 id="on-encountering-any-problem-while-building-and-serving-your-jekyll-site-you-can-consider-visiting-to-the-troubleshooting-page">On encountering any problem while building and serving your Jekyll site you can consider visiting to the <a href="https://jekyllrb.com/docs/troubleshooting/#configuration-problems" target="_blank">troubleshooting</a> page</h6>]]></content><author><name></name></author><category term="jekyll" /><category term="informative" /><category term="technology" /><summary type="html"><![CDATA[Jekyll is a static site generator. You give it text written in your favorite markup language and it uses layouts to create a static website.]]></summary></entry></feed>
+<h6 id="on-encountering-any-problem-while-building-and-serving-your-jekyll-site-you-can-consider-visiting-to-the-troubleshooting-page">On encountering any problem while building and serving your Jekyll site you can consider visiting to the <a href="https://jekyllrb.com/docs/troubleshooting/#configuration-problems" target="_blank">troubleshooting</a> page</h6>]]></content><author><name></name></author><category term="jekyll" /><category term="informative" /><category term="technology" /><summary type="html"><![CDATA[Jekyll is a static site generator. You give it text written in your favorite markup language and it uses layouts to create a static website.]]></summary></entry><entry><title type="html">Welcome to my blog!</title><link href="http://localhost:4000/blog/welcome" rel="alternate" type="text/html" title="Welcome to my blog!" /><published>2019-01-01T00:00:00+02:00</published><updated>2019-01-01T00:00:00+02:00</updated><id>http://localhost:4000/blog/welcome</id><content type="html" xml:base="http://localhost:4000/blog/welcome"><![CDATA[<p>Welcome! I am Roman Surkoff, an experienced Java developer with a proven track record of delivering high-quality 
+software solutions across various industries, including banking and government portals. I am passionate about 
+collaborating with teams to streamline development processes and skilled in mentoring junior developers.</p>
+
+<hr />
+
+<p><b>
+    Welcome to my blog!
+</b>
+<br /></p>
+
+<p>Hello everyone, I’m Roman Surkoff, an experienced and results-oriented Java developer with a passion for delivering 
+high-quality software solutions. With a strong track record of delivering successful projects across various industries, 
+including banking software and government portals, I’m dedicated to continuous learning and growth 
+in the field of software development.</p>
+
+<p><br /></p>
+
+<p>Throughout my career, I’ve been committed to collaborating with cross-functional teams to streamline the 
+software development process and enhance code quality. As a skilled team leader, I’ve effectively managed and mentored 
+junior developers, fostering a collaborative and productive work environment.</p>
+
+<p><br /></p>
+
+<p>Driven by the challenge of solving complex problems, I thrive in dynamic environments where I can apply my strong 
+problem-solving skills and attention to detail. My focus is on delivering exceptional results, surpassing customer 
+expectations, and contributing to the success of forward-thinking organizations.</p>
+
+<p><br /></p>
+
+<p>I’m excited to share my insights and experiences with you through this blog. Stay tuned for valuable content on 
+software development, technology, and more. Thank you for joining me on this journey!</p>]]></content><author><name></name></author><category term="hello-world" /><category term="post" /><category term="about" /><category term="welcome" /><summary type="html"><![CDATA[Welcome! I am Roman Surkoff, an experienced Java developer with a proven track record of delivering high-quality software solutions in banking and government sectors while collaborating with teams and mentoring junior developers.]]></summary></entry></feed>
