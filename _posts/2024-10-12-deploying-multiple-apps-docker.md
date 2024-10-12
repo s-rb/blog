@@ -1,5 +1,5 @@
 ---
-title: 'Deploying Multiple Apps on a Single VPS with Docker'
+title: 'Deploying Multiple Apps on a Single VPS'
 layout: post
 post-image: /assets/images/posts/2024/00003-1.png
 description: Docker enables the efficient deployment and management of multiple applications on a single VPS through 

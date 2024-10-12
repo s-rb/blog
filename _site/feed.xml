@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T14:25:49+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">GitHub Profile Trophy: enhance your profile</title><link href="http://localhost:4000/blog/GitHub-Profile-Trophy" rel="alternate" type="text/html" title="GitHub Profile Trophy: enhance your profile" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/GitHub-Profile-Trophy</id><content type="html" xml:base="http://localhost:4000/blog/GitHub-Profile-Trophy"><![CDATA[<p>GitHub Profile Trophy is a service that enhances your GitHub profile with visual trophies showcasing your achievements, 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T14:39:31+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">GitHub Profile Trophy: enhance your profile</title><link href="http://localhost:4000/blog/GitHub-Profile-Trophy" rel="alternate" type="text/html" title="GitHub Profile Trophy: enhance your profile" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/GitHub-Profile-Trophy</id><content type="html" xml:base="http://localhost:4000/blog/GitHub-Profile-Trophy"><![CDATA[<p>GitHub Profile Trophy is a service that enhances your GitHub profile with visual trophies showcasing your achievements, 
 such as the number of repositories and open-source contributions. To use it, visit the GitHub Profile Trophy website, 
 enter your account name, and get the code to insert into your README. You can customize the trophies’ theme, 
 number of columns, and categories to make your profile more engaging and visually appealing.</p>
@@ -29,7 +29,7 @@ number of columns, and categories to make your profile more engaging and visuall
 
 <p><a href="https://github-profile-trophy.vercel.app/">Try it now</a>.</p>
 
-<p>You can check out my trophies on <a href="https://github.com/s-rb">my profile</a>.</p>]]></content><author><name></name></author><category term="icons" /><category term="post" /><category term="github" /><category term="profile" /><summary type="html"><![CDATA[GitHub Profile Trophy enhances your GitHub profile with customizable visual trophies that showcase your achievements, making your portfolio more engaging]]></summary></entry><entry><title type="html">Deploying Multiple Apps on a Single VPS with Docker</title><link href="http://localhost:4000/blog/deploying-multiple-apps-docker" rel="alternate" type="text/html" title="Deploying Multiple Apps on a Single VPS with Docker" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/deploying-multiple-apps-docker</id><content type="html" xml:base="http://localhost:4000/blog/deploying-multiple-apps-docker"><![CDATA[<p>Deploying multiple applications on a single VPS using Docker allows for efficient isolation and management of each app 
+<p>You can check out my trophies on <a href="https://github.com/s-rb">my profile</a>.</p>]]></content><author><name></name></author><category term="icons" /><category term="post" /><category term="github" /><category term="profile" /><summary type="html"><![CDATA[GitHub Profile Trophy enhances your GitHub profile with customizable visual trophies that showcase your achievements, making your portfolio more engaging]]></summary></entry><entry><title type="html">Deploying Multiple Apps on a Single VPS</title><link href="http://localhost:4000/blog/deploying-multiple-apps-docker" rel="alternate" type="text/html" title="Deploying Multiple Apps on a Single VPS" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/deploying-multiple-apps-docker</id><content type="html" xml:base="http://localhost:4000/blog/deploying-multiple-apps-docker"><![CDATA[<p>Deploying multiple applications on a single VPS using Docker allows for efficient isolation and management of each app 
 in containers. By installing Docker and creating a docker-compose.yml file, you can easily launch and manage services 
 like Node.js and PHP. Additionally, tools like Portainer provide a user-friendly web interface for streamlined 
 container management, making updates and oversight simpler.</p>
@@ -84,7 +84,53 @@ services:
 
 <p><b>Conclusion</b></p>
 
-<p>Using Docker and tools like Portainer allows you to deploy and manage multiple applications on a single VPS easily, simplifying service management and updates.</p>]]></content><author><name></name></author><category term="docker" /><category term="post" /><category term="vps" /><category term="portainer" /><summary type="html"><![CDATA[Docker enables the efficient deployment and management of multiple applications on a single VPS through containerization, simplifying updates and service management with tools like Portainer.]]></summary></entry><entry><title type="html">Cool icons for github profile</title><link href="http://localhost:4000/blog/cool-icons-for-github-profile" rel="alternate" type="text/html" title="Cool icons for github profile" /><published>2024-10-08T00:00:00+02:00</published><updated>2024-10-08T00:00:00+02:00</updated><id>http://localhost:4000/blog/cool-icons-for-github-profile</id><content type="html" xml:base="http://localhost:4000/blog/cool-icons-for-github-profile"><![CDATA[<p>Icons8 is a platform that offers a vast collection of icons for personal and commercial projects, 
+<p>Using Docker and tools like Portainer allows you to deploy and manage multiple applications on a single VPS easily, simplifying service management and updates.</p>]]></content><author><name></name></author><category term="docker" /><category term="post" /><category term="vps" /><category term="portainer" /><summary type="html"><![CDATA[Docker enables the efficient deployment and management of multiple applications on a single VPS through containerization, simplifying updates and service management with tools like Portainer.]]></summary></entry><entry><title type="html">Commit Message Style in Git</title><link href="http://localhost:4000/blog/commit-messages" rel="alternate" type="text/html" title="Commit Message Style in Git" /><published>2024-10-11T00:00:00+02:00</published><updated>2024-10-11T00:00:00+02:00</updated><id>http://localhost:4000/blog/commit-messages</id><content type="html" xml:base="http://localhost:4000/blog/commit-messages"><![CDATA[<p>Maintaining a clear and structured change history in Git is essential for effective version control, and following best 
+practices for commit messages can greatly enhance this process. Key guidelines include writing concise messages in the 
+imperative mood, explaining the reasons for changes, and separating messages into a clear header and body. By grouping 
+related changes and regularly reviewing the commit history, you can ensure better organization and collaboration 
+within your projects.</p>
+
+<hr />
+
+<p><b>Commit Message Style in Git</b></p>
+
+<p>Working with Git is not only about version control, but also about maintaining a change history that can be clear and structured. Below are best practices for writing commit messages:</p>
+
+<p><b>1. Write a clear and concise message</b>
+The commit message should be clear and explain the essence of the change. For example:</p>
+<pre><code>git commit -m "Fixed button display on the homepage"</code></pre>
+
+<p><b>2. Use the imperative mood</b>
+Phrase commit messages in the imperative mood. This helps create consistency in the history. Example:</p>
+<pre><code>git commit -m "Add date filtering capability"</code></pre>
+
+<p><b>3. Indicate the reason for changes</b>
+A good practice is to briefly explain why you made the change. For example:</p>
+<pre><code>git commit -m "Optimize image loading for better performance"</code></pre>
+
+<p><b>4. Separate messages into a header and body</b>
+Use a header of up to 50 characters, and then add a more detailed description after a blank line. Example:</p>
+<pre><code>
+git commit -m "Update library dependencies"
+
+Updated libraries to the latest versions for improved security and performance.
+</code></pre>
+
+<p><b>5. Group related changes</b>
+Avoid creating too many small commits. Try to combine logically related changes into one commit:</p>
+<pre><code>git commit -m "Add new functionality: upload and delete files"</code></pre>
+
+<p><b>6. Avoid using timestamps</b>
+Do not include time or date in messages, as this is already recorded in the commit itself. Instead, it is better to specify what was changed:</p>
+<pre><code>git commit -m "Fix bug in message sending function"</code></pre>
+
+<p><b>7. Check the commit history</b>
+Regularly review the commit history using the command:</p>
+<pre><code>git log --oneline</code></pre>
+<p>This will help you maintain order and structure in your project.</p>
+
+<p><b>Conclusion</b>
+By following these simple rules, you will be able to create a clear and accessible change history in your project, making work easier for both you and your colleagues. <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji></p>]]></content><author><name></name></author><category term="git" /><category term="post" /><category term="commit" /><category term="codestyle" /><category term="best-practice" /><summary type="html"><![CDATA[Following best practices for commit messages in Git, such as writing concise and imperative statements while explaining changes, helps maintain a clear and structured change history for better collaboration and project management]]></summary></entry><entry><title type="html">Cool icons for github profile</title><link href="http://localhost:4000/blog/cool-icons-for-github-profile" rel="alternate" type="text/html" title="Cool icons for github profile" /><published>2024-10-08T00:00:00+02:00</published><updated>2024-10-08T00:00:00+02:00</updated><id>http://localhost:4000/blog/cool-icons-for-github-profile</id><content type="html" xml:base="http://localhost:4000/blog/cool-icons-for-github-profile"><![CDATA[<p>Icons8 is a platform that offers a vast collection of icons for personal and commercial projects, 
 available in various styles and formats. All icons can be used for free, making them an ideal resource 
 for designers and developers looking to enhance the visual appeal of social media profiles, presentations, 
 and websites.</p>
