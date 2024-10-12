@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T14:39:31+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">GitHub Profile Trophy: enhance your profile</title><link href="http://localhost:4000/blog/GitHub-Profile-Trophy" rel="alternate" type="text/html" title="GitHub Profile Trophy: enhance your profile" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/GitHub-Profile-Trophy</id><content type="html" xml:base="http://localhost:4000/blog/GitHub-Profile-Trophy"><![CDATA[<p>GitHub Profile Trophy is a service that enhances your GitHub profile with visual trophies showcasing your achievements, 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T14:49:15+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">GitHub Profile Trophy: enhance your profile</title><link href="http://localhost:4000/blog/GitHub-Profile-Trophy" rel="alternate" type="text/html" title="GitHub Profile Trophy: enhance your profile" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/GitHub-Profile-Trophy</id><content type="html" xml:base="http://localhost:4000/blog/GitHub-Profile-Trophy"><![CDATA[<p>GitHub Profile Trophy is a service that enhances your GitHub profile with visual trophies showcasing your achievements, 
 such as the number of repositories and open-source contributions. To use it, visit the GitHub Profile Trophy website, 
 enter your account name, and get the code to insert into your README. You can customize the trophies’ theme, 
 number of columns, and categories to make your profile more engaging and visually appealing.</p>
@@ -130,7 +130,120 @@ Regularly review the commit history using the command:</p>
 <p>This will help you maintain order and structure in your project.</p>
 
 <p><b>Conclusion</b>
-By following these simple rules, you will be able to create a clear and accessible change history in your project, making work easier for both you and your colleagues. <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji></p>]]></content><author><name></name></author><category term="git" /><category term="post" /><category term="commit" /><category term="codestyle" /><category term="best-practice" /><summary type="html"><![CDATA[Following best practices for commit messages in Git, such as writing concise and imperative statements while explaining changes, helps maintain a clear and structured change history for better collaboration and project management]]></summary></entry><entry><title type="html">Cool icons for github profile</title><link href="http://localhost:4000/blog/cool-icons-for-github-profile" rel="alternate" type="text/html" title="Cool icons for github profile" /><published>2024-10-08T00:00:00+02:00</published><updated>2024-10-08T00:00:00+02:00</updated><id>http://localhost:4000/blog/cool-icons-for-github-profile</id><content type="html" xml:base="http://localhost:4000/blog/cool-icons-for-github-profile"><![CDATA[<p>Icons8 is a platform that offers a vast collection of icons for personal and commercial projects, 
+By following these simple rules, you will be able to create a clear and accessible change history in your project, making work easier for both you and your colleagues. <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji></p>]]></content><author><name></name></author><category term="git" /><category term="post" /><category term="commit" /><category term="codestyle" /><category term="best-practice" /><summary type="html"><![CDATA[Following best practices for commit messages in Git, such as writing concise and imperative statements while explaining changes, helps maintain a clear and structured change history for better collaboration and project management]]></summary></entry><entry><title type="html">25 Powerful and Free APIs Every Developer Should Know in 2024</title><link href="http://localhost:4000/blog/25-powerful-free-api" rel="alternate" type="text/html" title="25 Powerful and Free APIs Every Developer Should Know in 2024" /><published>2024-10-10T00:00:00+02:00</published><updated>2024-10-10T00:00:00+02:00</updated><id>http://localhost:4000/blog/25-powerful-free-api</id><content type="html" xml:base="http://localhost:4000/blog/25-powerful-free-api"><![CDATA[<p>Developers in 2024 have access to a variety of free APIs that can significantly enhance their projects. 
+These 25 APIs range from weather data and news aggregation to AI-powered text generation and real-time exchange rates, 
+allowing for diverse functionality across different application types. Whether you’re building entertainment apps with 
+The Movie Database API or integrating powerful geolocation with Google Maps, these tools are invaluable for modern 
+software development.</p>
+
+<hr />
+
+<p><b>25 Powerful and Free APIs Every Developer Should Know in 2024</b></p>
+
+<p>In the world of development, access to powerful APIs can significantly simplify the task of creating applications. Here’s a list of 25 essential free APIs that will be useful for developers in 2024:</p>
+
+<p><b>1. <a href="https://openweathermap.org/api">OpenWeatherMap</a></b>
+Provides current weather data and forecasts. Ideal for applications related to weather.
+<br /><strong>Usage:</strong> 60 calls per minute for free.</p>
+
+<p><b>2. <a href="https://newsapi.org/">News API</a></b>
+Collects the latest news from various sources to create your own news applications.
+<br /><strong>Usage:</strong> 500 requests per day for free.</p>
+
+<p><b>3. <a href="https://developers.google.com/maps/documentation">Google Maps API</a></b>
+Integrates maps and geolocation features into your applications.
+<br /><strong>Usage:</strong> Free tier includes $200 worth of credits monthly.</p>
+
+<p><b>4. <a href="https://www.themoviedb.org/documentation/api">The Movie Database (TMDB) API</a></b>
+Accesses information about movies, TV shows, and actors. Great for entertainment-related applications.
+<br /><strong>Usage:</strong> No rate limits.</p>
+
+<p><b>5. <a href="https://jsonplaceholder.typicode.com/">JSONPlaceholder</a></b>
+Provides fake data for testing and prototyping your applications.
+<br /><strong>Usage:</strong> Unlimited requests.</p>
+
+<p><b>6. <a href="https://developer.spotify.com/documentation/web-api/">Spotify API</a></b>
+Gives access to music data, playlists, and Spotify user information.
+<br /><strong>Usage:</strong> Rate limits are based on user authentication; generally, around 10 requests per second.</p>
+
+<p><b>7. <a href="https://api.github.com/">GitHub API</a></b>
+Interact with GitHub: access repositories, commits, and user data.
+<br /><strong>Usage:</strong> 5000 requests per hour for authenticated users.</p>
+
+<p><b>8. <a href="https://developers.facebook.com/docs/graph-api">Facebook Graph API</a></b>
+Integrates with Facebook to access user and page data.
+<br /><strong>Usage:</strong> Rate limits depend on the access token type.</p>
+
+<p><b>9. <a href="https://twitter.com/en/docs/twitter-api">Twitter API</a></b>
+Access tweets and user data from Twitter.
+<br /><strong>Usage:</strong> 900 requests per 15 minutes for user timeline.</p>
+
+<p><b>10. <a href="https://www.boredapi.com/">Bored API</a></b>
+Provides ideas for leisure activities if you’re unsure what to do.
+<br /><strong>Usage:</strong> Unlimited requests.</p>
+
+<p><b>11. <a href="https://api.exchangerate-api.com/">ExchangeRate API</a></b>
+Offers real-time exchange rates for financial applications.
+<br /><strong>Usage:</strong> 250 requests per month for free.</p>
+
+<p><b>12. <a href="https://api.openai.com/">OpenAI API</a></b>
+Leverage the power of AI for text generation and analysis.
+<br /><strong>Usage:</strong> Pricing based on usage; free tier available.</p>
+
+<p><b>13. <a href="https://ipgeolocation.io/">IP Geolocation API</a></b>
+Determine user location based on their IP address.
+<br /><strong>Usage:</strong> 1,000 requests per month for free.</p>
+
+<p><b>14. <a href="https://www.feralhosting.com/api">Feral Hosting API</a></b>
+Manage hosting and services through an API.
+<br /><strong>Usage:</strong> Depends on the hosting plan.</p>
+
+<p><b>15. <a href="https://developers.pocketbase.io/">PocketBase API</a></b>
+A real-time database for mobile and web applications.
+<br /><strong>Usage:</strong> Unlimited requests.</p>
+
+<p><b>16. <a href="https://api.nasa.gov/">NASA API</a></b>
+Access data about space, images, and NASA missions.
+<br /><strong>Usage:</strong> 1,000 requests per hour for free.</p>
+
+<p><b>17. <a href="https://docs.github.com/en/rest">GitHub REST API</a></b>
+Additional access to GitHub resources and data.
+<br /><strong>Usage:</strong> 5000 requests per hour for authenticated users.</p>
+
+<p><b>18. <a href="https://developer.woocommerce.com/">WooCommerce API</a></b>
+Integrates with the WooCommerce platform for online store management.
+<br /><strong>Usage:</strong> Rate limits depend on server settings.</p>
+
+<p><b>19. <a href="https://www.virustotal.com/gui/home/upload">VirusTotal API</a></b>
+Checks files and URLs for viruses and threats.
+<br /><strong>Usage:</strong> 4 requests per minute for free.</p>
+
+<p><b>20. <a href="https://dog.ceo/dog-api/">Dog API</a></b>
+Provides information and images of dogs for animal lovers.
+<br /><strong>Usage:</strong> Unlimited requests.</p>
+
+<p><b>21. <a href="https://catfact.ninja/">Cat Facts API</a></b>
+Offers interesting facts about cats to entertain users.
+<br /><strong>Usage:</strong> Unlimited requests.</p>
+
+<p><b>22. <a href="https://rapidapi.com/">RapidAPI</a></b>
+A platform for finding and integrating various APIs.
+<br /><strong>Usage:</strong> Varies by individual API.</p>
+
+<p><b>23. <a href="https://openai.com/api/">OpenAI GPT-3 API</a></b>
+Creates powerful text generators and chatbots.
+<br /><strong>Usage:</strong> Pricing based on usage; free tier available.</p>
+
+<p><b>24. <a href="https://developer.yahoo.com/weather/">Yahoo Weather API</a></b>
+Provides weather data from Yahoo.
+<br /><strong>Usage:</strong> 2,000 requests per day for free.</p>
+
+<p><b>25. <a href="https://www.openstreetmap.org/">OpenStreetMap API</a></b>
+Access community-generated mapping data.
+<br /><strong>Usage:</strong> Unlimited requests.</p>
+
+<p><b>Conclusion</b>
+These 25 APIs offer a wide range of capabilities for developers, enabling the creation of innovative applications that integrate diverse data and functionality. Use them to enhance your projects and make them more interactive. <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji></p>]]></content><author><name></name></author><category term="api" /><category term="post" /><category term="developer" /><category term="free" /><summary type="html"><![CDATA[Here is a collection of 25 powerful free APIs that developers can leverage in 2024 to simplify app development, offering everything from weather data and news to AI capabilities and geolocation.]]></summary></entry><entry><title type="html">Cool icons for github profile</title><link href="http://localhost:4000/blog/cool-icons-for-github-profile" rel="alternate" type="text/html" title="Cool icons for github profile" /><published>2024-10-08T00:00:00+02:00</published><updated>2024-10-08T00:00:00+02:00</updated><id>http://localhost:4000/blog/cool-icons-for-github-profile</id><content type="html" xml:base="http://localhost:4000/blog/cool-icons-for-github-profile"><![CDATA[<p>Icons8 is a platform that offers a vast collection of icons for personal and commercial projects, 
 available in various styles and formats. All icons can be used for free, making them an ideal resource 
 for designers and developers looking to enhance the visual appeal of social media profiles, presentations, 
 and websites.</p>
@@ -153,7 +266,7 @@ and websites.</p>
 
 <p><b>- Website development</b>: If you’re creating a website or web application, icons can be a great addition to the interface. They help users navigate the site more easily and improve the overall user experience.</p>
 
-<p><img src="/assets/images/posts/2024/00001-1.png" alt="Githun profile icons" /></p>
+<p><img src="/assets/images/posts/2024/00001-1.png" alt="Github profile icons" /></p>
 
 <p>To start using icons from Icons8, simply visit <a href="https://icons8.com">icons8.com</a> and use the search feature to find the icons you need. You can filter the results by style, color, and other parameters to find exactly what you’re looking for.</p>
 
