@@ -23,16 +23,21 @@ heroimage: https://images.pexels.com/photos/220444/pexels-photo-220444.jpeg?auto
 # Social Media and Contact
 # If you don't want to use any icon, you can leave them blank.
 email: surkoff.com@gmail.com
-facebook_username: /
-twitter_username: /
-instagram_username: s7_roman_s7
+facebook_username:
+twitter_username:
+instagram_username:
 linkedin_username: roman-surkoff
 github_username:  s-rb
-youtube_channel_id: /
-reddit_username: /
-behance_username: /
-dribbble_username: /
-spotify_username: /
+youtube_channel_id:
+reddit_username:
+behance_username:
+dribbble_username:
+spotify_username:
+telegram_username: Roman_Surkov
+leetcode_username: surkoff
+devto_username: surkoff
+habr_username: s-rb
+telegram_channel: code_must_flow
 
 # Google Analytics
 google-analytics: /
