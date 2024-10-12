@@ -303,7 +303,8 @@ a.navbar-item.is-active {
         margin: auto;
     }
     #post-image {
-        border-radius: 0.25rem;
+        object-fit: cover;        // Изображение будет обрезаться по сторонам, сохраняя пропорции
+        border-radius: 0.25rem;   // Сохраните закругление
     }
     .subtitle {
         letter-spacing: 0.05rem;
