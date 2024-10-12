@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T12:28:33+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">Cool icons for github profile</title><link href="http://localhost:4000/blog/cool-icons-for-github-profile" rel="alternate" type="text/html" title="Cool icons for github profile" /><published>2024-10-08T00:00:00+02:00</published><updated>2024-10-08T00:00:00+02:00</updated><id>http://localhost:4000/blog/cool-icons-for-github-profile</id><content type="html" xml:base="http://localhost:4000/blog/cool-icons-for-github-profile"><![CDATA[<p>Icons8 is a platform that offers a vast collection of icons for personal and commercial projects, 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-12T14:06:49+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">GitHub Profile Trophy: enhance your profile</title><link href="http://localhost:4000/blog/GitHub-Profile-Trophy" rel="alternate" type="text/html" title="GitHub Profile Trophy: enhance your profile" /><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><id>http://localhost:4000/blog/GitHub-Profile-Trophy</id><content type="html" xml:base="http://localhost:4000/blog/GitHub-Profile-Trophy"><![CDATA[<p>GitHub Profile Trophy is a service that enhances your GitHub profile with visual trophies showcasing your achievements, 
+such as the number of repositories and open-source contributions. To use it, visit the GitHub Profile Trophy website, 
+enter your account name, and get the code to insert into your README. You can customize the trophies’ theme, 
+number of columns, and categories to make your profile more engaging and visually appealing.</p>
+
+<hr />
+
+<p><b>GitHub Profile Trophy: enhance your profile</b></p>
+
+<p>GitHub Profile Trophy is a service to enhance your GitHub profile with visual trophies that showcase your achievements: number of repositories, open-source contributions, and much more.</p>
+
+<p><b>How to use?</b></p>
+
+<p>Go to <a href="https://github-profile-trophy.vercel.app/">GitHub Profile Trophy</a>, enter your account name, and get the code to insert into your README:</p>
+
+<p><code>[![trophy](https://github-profile-trophy.vercel.app/?username=your_username)](https://github.com/ryo-ma/github-profile-trophy)</code></p>
+
+<p><b>Settings</b></p>
+
+<p>You can customize the theme, number of columns, and categories:</p>
+
+<p><code>[![trophy](https://github-profile-trophy.vercel.app/?username=your_username&amp;theme=onedark&amp;row=2&amp;column=3)]</code></p>
+
+<p><img src="/assets/images/posts/2024/00002-2.png" alt="Github profile trophy" /></p>
+
+<p><b>Advantages</b></p>
+
+<p><i>Visual appeal</i>: makes your profile more engaging. <i>Flexibility</i>: customize the trophies to your preferences. GitHub is your portfolio, and this service helps make it stand out and look better.</p>
+
+<p><a href="https://github-profile-trophy.vercel.app/">Try it now</a>.</p>
+
+<p>You can check out my trophies on <a href="https://github.com/s-rb">my profile</a>.</p>]]></content><author><name></name></author><category term="icons" /><category term="post" /><category term="github" /><category term="profile" /><summary type="html"><![CDATA[GitHub Profile Trophy enhances your GitHub profile with customizable visual trophies that showcase your achievements, making your portfolio more engaging]]></summary></entry><entry><title type="html">Cool icons for github profile</title><link href="http://localhost:4000/blog/cool-icons-for-github-profile" rel="alternate" type="text/html" title="Cool icons for github profile" /><published>2024-10-08T00:00:00+02:00</published><updated>2024-10-08T00:00:00+02:00</updated><id>http://localhost:4000/blog/cool-icons-for-github-profile</id><content type="html" xml:base="http://localhost:4000/blog/cool-icons-for-github-profile"><![CDATA[<p>Icons8 is a platform that offers a vast collection of icons for personal and commercial projects, 
 available in various styles and formats. All icons can be used for free, making them an ideal resource 
 for designers and developers looking to enhance the visual appeal of social media profiles, presentations, 
 and websites.</p>
