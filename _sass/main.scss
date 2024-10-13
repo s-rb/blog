@@ -72,3 +72,61 @@ hr {
         }
     }
 }
+
+.timeline-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    ul.timeline-list {
+        position: relative;
+        padding-left: 40px;
+        list-style: none;
+    }
+    ul.timeline-list:before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background: #333;
+    }
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+        .timeline-item-content {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .timeline-period {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #666;
+        }
+        .timeline-position {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .timeline-company-url {
+            font-size: 1rem;
+            color: #007bff;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .circle {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            background: #333;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+        }
+    }
+}

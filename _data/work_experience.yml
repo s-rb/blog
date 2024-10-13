@@ -1,0 +1,156 @@
+companies:
+  Ey:
+    name: 'Ernst & Young'
+    url: 'https://ey.com'
+  It_one:
+    name: 'It-one'
+    url: 'https://it-one.ru'
+  AlfaBank:
+    name: 'Alfa-Bank'
+    url: 'https://alfabank.ru'
+  Colvir:
+    name: 'Colvir Software Solutions'
+    url: 'https://colvir.com'
+  Codemark:
+    name: 'Codemark'
+    url: 'http://codemark.ru/'
+  Skillbox:
+    name: 'Skillbox'
+    url: 'https://skillbox.ru'
+  Nipi:
+    name: 'NIPIGAZ (SIBUR Group)'
+    url: 'https://www.nipigas.ru/'
+  Sys:
+    name: 'System & networks'
+    url: null
+  Ets:
+    name: 'Electrical systems'
+    url: 'http://etsystem.ru/'
+  Rostelecom:
+    name: 'Rostelecom'
+    url: 'https://rt.ru'
+
+experience:
+  - period: "12.2023 - now"
+    company: AlfaBank
+    position: "Lead software engineer"
+    description: |
+      - Developed various solutions for a project managing biometric data of clients and employees: collection, storage, processing, and integration with other Bank systems and government agencies.
+      - Migrated all microservices to a modern technology stack.
+      - Developed several parts of functionality within tight deadlines to comply with rapidly changing legislation, enabling the Bank to retain licenses for working with biometrics.
+      - Significantly improved logging on the project, allowing the support team in the production environment to more effectively monitor and analyze events.
+      - Officially performed the functions of the team Scrum Master, conducting all necessary meetings and ensuring the relevance of tasks and the backlog.
+
+  - period: "10.2021 - 12.2023"
+    company: It_one
+    position: "Senior software engineer"
+    description: |
+      - Developed banking software for one of the largest banks in the country.
+      - Implemented a digital signature project for clients, attracting new partners and tripling the number of issued loans.
+      - Performed technical improvements that significantly reduced production time.
+      - Separated microservices, increased test coverage, and implemented new CI/CD processes.
+
+  - period: "09.2020 - 10.2021"
+    company: Colvir
+    position: "Java developer"
+    description: |
+      - Participated in maintaining the company's main product, banking software.
+      - Developed a service for receiving multicast data from the stock exchange in a multithreaded mode.
+
+  - period: "07.2020 - 09.2021"
+    company: Codemark
+    position: "Programmer"
+    description: |
+      - Developed the backend for a sports federation portal and an application for working with the database of a government electoral system.
+      - Implemented full-text search in PostgreSQL and developed functionality for mass creation of data records.
+
+not_relevant_experience:
+  - period: "2018 - 2019"
+    company: Nipi
+    position: "Expert at reporting and planning department"
+    description: ""
+
+  - period: "2017 - 2018"
+    company: Rostelecom
+    position: "Contractor at Nizhne-Bureyskaya HPP construction"
+    description: ""
+
+  - period: "2015 - 2017"
+    company: Ey
+    position: "Contractor at Blagoveschenskaya TPP reconstruction"
+    description: ""
+
+  - period: "2013 - 2015"
+    company: Sys
+    position: "Chief project engineer"
+    description: ""
+
+  - period: "2009 - 2013"
+    company: Ets
+    position: "Lead design engineer"
+    description: ""
+
+engineering_experience:
+  - period: "07.2009 - 11.2019"
+    company: "Ey / Nipi / Rostelecom / Sys / Ets"
+    position: "Chief project engineer / Lead design engineer / Contractor / Expert"
+    description: |
+      - Monitored construction work and equipment delivery for the industrial infrastructure of the Amur Gas Processing Plant project as an expert.
+      - Led a design team of 15 members to develop engineering system design documentation for major projects like Bureyskaya HPP and Vostochny Spaceport.
+
+core_competencies:
+  - name: "Java"
+  - name: "Teamwork"
+  - name: "OOP"
+  - name: "Confluence"
+  - name: "Docker"
+  - name: "Git"
+  - name: "Spring Framework"
+  - name: "Jira"
+  - name: "Liquibase"
+  - name: "JSON"
+  - name: "SQL"
+  - name: "Microservices"
+  - name: "Scrum"
+  - name: "Teamcity"
+  - name: "REST"
+  - name: "SpringBoot"
+  - name: "CamundaBPM"
+  - name: "Bitbucket"
+  - name: "Maven/Gradle"
+  - name: "API"
+  - name: "PostgreSQL"
+  - name: "Kafka"
+  - name: "Kibana"
+  - name: "JUnit/Mockito"
+
+certifications:
+  - company: "Stepik"
+    date: "01.2024"
+    name: "Ansible for beginners + hands-on experience"
+  - company: "Stepik"
+    date: "12.2023"
+    name: "Kubernetes for users"
+  - company: "Specialist - Computer Training Center"
+    date: "06.2023"
+    name: "Refactoring as a systematic approach"
+  - company: "Udemy"
+    date: "10.2023"
+    name: "FullStack: Angular and Java SpringBoot E-Commerce Website"
+  - company: "IBS Training center"
+    date: "05.2023"
+    name: "Design patterns (GoF)"
+  - company: "Mail.ru"
+    date: "04.2020"
+    name: "Development of a Web Service in Java"
+
+education:
+  - company: "Amur State University"
+    additional: "Faculty of Power Engineering"
+    qualification: "Specialist degree in Engineering of Power Plants"
+    date_start: "08.2004"
+    date_end: "07.2009"
+  - company: "Skillbox"
+    qualification: "Student of the 'Java Developer' course"
+    date_start: "07.2019"
+    date_end: "05.2020"
