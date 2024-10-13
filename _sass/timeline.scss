@@ -1,6 +1,7 @@
 // Переменные
-$main-color: var(--main-color);
-$dark-color: var(--bs-dark);
+$baloon-color: #dcdcdc;
+$main-color: #4169e1;
+$dark-color: #363636;
 $timeline-width: 4px;
 $circle-size: 16px;
 $media-breakpoint-sm: 767px;
@@ -15,139 +16,120 @@ $media-breakpoint-xxs: 399px;
   }
 }
 
-.timeline-list {
+/* Основной контейнер таймлайна */
+.timeline-container {
   display: flex;
   flex-direction: column;
   position: relative;
   margin: 40px 0;
   padding-left: 0;
+  justify-content: center;
 
   &::after {
-    background-color: white;
     content: '';
+    background-color: $dark-color;
     position: absolute;
-    left: calc(50% - 2px);
+    left: 50%;
     width: $timeline-width;
     height: 100%;
-  }
-
-  // Медиа-запросы для разных разрешений
-  @include media($media-breakpoint-sm) {
-    &::after {
-      left: 3rem;
-    }
-  }
-
-  @include media($media-breakpoint-xxs) {
-    &::after {
-      left: 0;
-    }
+    transform: translateX(-50%); /* Центрирование линии */
   }
 }
 
-.timeline-item {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 30px;
-  position: relative;
-  margin: 10px 0;
-  width: 50%;
+/* Список таймлайна */
+.timeline-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  margin-left: 0em !important;
+  display: flex !important;
+  flex-direction: column;
+}
 
-  &:nth-child(odd) {
+  /* Для нечетных элементов */
+.timeline-item:nth-child(even) {
+    align-self: flex-start;
+    padding-right: 30px;
+    justify-content: flex-end;
+}
+
+/* Для четных элементов */
+.timeline-item:nth-child(odd) {
     align-self: flex-end;
     justify-content: flex-start;
     padding-left: 30px;
-    list-style: none;
-  }
-
-  // Медиа-запросы для разных разрешений
-  @include media($media-breakpoint-sm) {
-    align-self: flex-start;
-    justify-content: flex-start;
-    padding-left: 5rem;
-    width: 450px;
-    list-style: none;
-  }
-
-  @include media($media-breakpoint-xs) {
-    width: 350px;
-  }
-
-  @include media($media-breakpoint-xxs) {
-    width: 250px;
-    padding: 0;
-  }
 }
 
-.timeline-item-content {
-  padding: 15px;
+/* Элемент списка таймлайна */
+.timeline-item {
+  display: flex;
+  justify-content: flex-end;
   position: relative;
-  width: 400px !important;
-  max-width: 70%;
-  text-align: right;
+  margin: 10px 0;
+  width: 50%;
+  list-style: none;
 
-  &::after {
-    content: ' ';
-    background-color: $dark-color;
-    box-shadow: 1px -1px 1px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    right: -7.5px;
-    top: calc(50% - 7.5px);
-    transform: rotate(45deg);
-    width: 15px;
-    height: 15px;
-  }
-
-  &:nth-child(odd) {
-    text-align: left;
-    align-items: flex-start;
-
-    &::after {
-      right: auto;
-      left: -7.5px;
-      box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  // Медиа-запросы для разных разрешений
+  /* Для мобильных устройств */
   @include media($media-breakpoint-sm) {
-    max-width: 100% !important;
-    text-align: left !important;
-    align-items: flex-start;
+    width: 100%;
+    padding-left: 5rem;
+    justify-content: flex-start;
   }
 
   @include media($media-breakpoint-xs) {
-    width: 250px !important;
-  }
-
-  @include media($media-breakpoint-md) {
-    width: 350px !important;
-    max-width: 100% !important;
+    width: 100%;
+    padding-left: 3rem;
   }
 }
 
-.timeline-company-url {
-  color: $main-color;
-  font-weight: bold;
-
-  &::after {
+.timeline-item-content a::after {
     content: '  ►';
     font-size: 0.7rem;
-  }
+}
 
-  // Медиа-запросы для разных разрешений
-  @include media($media-breakpoint-sm) {
-    align-self: flex-start;
+/* Для нечетных элементов (слева) */
+.timeline-item:nth-child(odd) .timeline-item-content {
+    text-align: left !important;
+
+    &::after {
+        left: -7px;
+        right: auto;
+    }
+}
+
+/* Контент внутри элемента таймлайна */
+.timeline-item-content {
+  padding: 16px;
+  position: relative;
+  width: 400px;
+  max-width: 70%;
+  text-align: right !important;
+  border-radius: 15px;
+  background-color: $dark-color;
+
+  /* Стрелка у блока */
+  &::after {
+    content: '';
+    background-color: $dark-color;
+    position: absolute;
+    right: -7px;
+    top: calc(50% - 7px);
+    transform: rotate(45deg);
+    width: 14px;
+    height: 14px;
   }
 }
 
-.timeline-period {
-  text-align: left;
+/* Для нечетных элементов (слева) */
+.timeline-item:nth-child(odd) .circle {
+    right: auto;
+    left: -38px;
 }
 
+/* Стили для кружков */
 .circle {
   background-color: #fff;
-  border: 2px solid $main-color;
+  border: 2px solid $dark-color;
   border-radius: 50%;
   position: absolute;
   top: calc(50% - 10px);
@@ -156,13 +138,16 @@ $media-breakpoint-xxs: 399px;
   height: $circle-size;
   z-index: 100;
 
-  &:nth-child(odd) {
-    right: auto;
-    left: -38px;
-  }
-
-  // Медиа-запросы для разных разрешений
+  /* Для мобильных устройств */
   @include media($media-breakpoint-xxs) {
     left: -7px !important;
+    right: auto !important;
   }
+}
+
+.timeline-position {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 16px;
 }

@@ -23,41 +23,20 @@ to surpassing customer expectations and driving business success.
 
 I am seeking a new opportunity where I can leverage my experience to contribute to the success of a promising company.
 
-# This is heading 1
-## This is heading 2
-### This is heading 3
-#### This is heading 4
-##### This is heading 5
-###### This is heading 6
+---
 
-[This is a link](#)
-
-> This is a blockquote
-
-`This is code`
-
-### Bullet List
-* Item 1
-* Item 2
-* Item 3
-* Item 4
-
-### Number List
-1. Item 1
-2. Item 2
-3. Item 3
-4. Item 4
-
-<br>
+<h3>
+Working timeline
+</h3>
 
 <div class="timeline-container">
     <ul class="timeline-list">
         {% for item in site.data.work_experience.experience %}
         <li class="timeline-item">
             <div class="timeline-item-content">
-                <div class="timeline-period">{{ item.period }}</div>
-                <div class="timeline-position">{{ item.position }}</div>
-                <a class="timeline-company-url" href="{{ site.data.work_experience.companies[item.company].url }}" target="_blank" rel="noopener noreferrer">
+                <div class="timeline-position has-text-white">{{ item.position }}</div>
+                <div class="timeline-period has-text-white">{{ item.period }}</div>
+                <a class="timeline-company-url has-text-white" href="{{ site.data.work_experience.companies[item.company].url }}" target="_blank" rel="noopener noreferrer">
                     {{ site.data.work_experience.companies[item.company].name }}
                 </a>
                 <span class="circle"></span>
@@ -67,9 +46,9 @@ I am seeking a new opportunity where I can leverage my experience to contribute 
         {% for item in site.data.work_experience.not_relevant_experience %}
         <li class="timeline-item">
             <div class="timeline-item-content">
-                <div class="timeline-period">{{ item.period }}</div>
-                <div class="timeline-position">{{ item.position }}</div>
-                <a class="timeline-company-url" href="{{ site.data.work_experience.companies[item.company].url }}" target="_blank" rel="noopener noreferrer">
+                <div class="timeline-position has-text-white">{{ item.position }}</div>
+                <div class="timeline-period has-text-white">{{ item.period }}</div>
+                <a class="timeline-company-url has-text-white" href="{{ site.data.work_experience.companies[item.company].url }}" target="_blank" rel="noopener noreferrer">
                     {{ site.data.work_experience.companies[item.company].name }}
                 </a>
                 <span class="circle"></span>
