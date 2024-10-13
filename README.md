@@ -1,6 +1,10 @@
 # My website, CV and portfolio statically generated pages using Jekyll and hosted with Github pages
 ## Jekyll theme - WhatATheme, modified
 
+### TODO:
+- To style project cards for larger images
+- To add project pages on click (like blog posts)
+
 ### Credits :bulb:
 * [Sneha Omer](http://sassyecoder.github.io/)
 * [Harsh Trivedi](http://harsh98trivedi.github.io/)
