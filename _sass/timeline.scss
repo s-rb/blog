@@ -33,6 +33,11 @@ $media-breakpoint-xxs: 399px;
     width: $timeline-width;
     height: 100%;
     transform: translateX(-50%); /* Центрирование линии */
+
+    /* Для мобильных устройств */
+    @include media($media-breakpoint-sm) {
+        left: 0%;
+    }
   }
 }
 
@@ -51,6 +56,12 @@ $media-breakpoint-xxs: 399px;
     align-self: flex-start;
     padding-right: 30px;
     justify-content: flex-end;
+
+    @include media($media-breakpoint-sm) {
+        align-self: flex-end;
+            justify-content: flex-start;
+            padding-left: 30px;
+      }
 }
 
 /* Для четных элементов */
@@ -83,7 +94,7 @@ $media-breakpoint-xxs: 399px;
 }
 
 .timeline-item-content a::after {
-    content: '  ►';
+    content: ' ►';
     font-size: 0.7rem;
 }
 
@@ -118,6 +129,26 @@ $media-breakpoint-xxs: 399px;
     width: 14px;
     height: 14px;
   }
+
+  @include media($media-breakpoint-sm) {
+          text-align: left !important;
+          max-width: 100%;
+
+          &::after {
+              left: -7px;
+              right: auto;
+              }
+          }
+
+  @include media($media-breakpoint-xs) {
+        text-align: left !important;
+        max-width: 70%;
+
+        &::after {
+            left: -7px;
+            right: auto;
+            }
+        }
 }
 
 /* Для нечетных элементов (слева) */
@@ -139,9 +170,9 @@ $media-breakpoint-xxs: 399px;
   z-index: 100;
 
   /* Для мобильных устройств */
-  @include media($media-breakpoint-xxs) {
-    left: -7px !important;
+  @include media($media-breakpoint-sm) {
     right: auto !important;
+    left: -38px;
   }
 }
 
