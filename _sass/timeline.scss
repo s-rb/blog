@@ -16,6 +16,13 @@ $media-breakpoint-xxs: 399px;
   }
 }
 
+.timeline {
+    @include media($media-breakpoint-sm) {
+            justify-content: center;
+            display: flex;
+        }
+    }
+
 /* Основной контейнер таймлайна */
 .timeline-container {
   display: flex;
