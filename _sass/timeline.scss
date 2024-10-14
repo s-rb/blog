@@ -189,3 +189,39 @@ $media-breakpoint-xxs: 399px;
     line-height: 24px;
     margin-bottom: 16px;
 }
+
+/* Скрываем элементы нерелевантного опыта по умолчанию */
+.not-relevant {
+    display: none;
+}
+
+/* Показываем нерелевантный опыт при активации чекбокса */
+.toggle-checkbox:checked ~ .timeline-container .timeline-list .not-relevant {
+    display: flex;
+}
+
+/* Скрываем сам чекбокс */
+.toggle-checkbox {
+    display: none;
+}
+
+/* Стили для кнопки */
+.toggle-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4169e1;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Изменение текста на кнопке при нажатии */
+.toggle-checkbox:checked + .toggle-button::after {
+    content: " Show Less";
+}
+.toggle-checkbox:not(:checked) + .toggle-button::after {
+    content: " Show More";
+}

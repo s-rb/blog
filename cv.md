@@ -31,6 +31,8 @@ Working timeline
 </h3>
 
 <div class="timeline">
+    <input type="checkbox" id="toggle" class="toggle-checkbox container has-text-centered has-background-grey-darker">
+    <label for="toggle" class="toggle-button container has-text-centered has-background-grey-darker"></label>
     <div class="timeline-container">
         <ul class="timeline-list">
             {% for item in site.data.work_experience.experience %}
@@ -46,7 +48,7 @@ Working timeline
             </li>
             {% endfor %}
             {% for item in site.data.work_experience.not_relevant_experience %}
-            <li class="timeline-item">
+            <li class="timeline-item not-relevant">
                 <div class="timeline-item-content">
                     <div class="timeline-position has-text-white">{{ item.position }}</div>
                     <div class="timeline-period has-text-white">{{ item.period }}</div>
