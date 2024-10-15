@@ -1,4 +1,122 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-15T20:39:53+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">Jenkins: executing script over ssh in a pipeline</title><link href="http://localhost:4000/blog/jenkins-executing-script-pipeline" rel="alternate" type="text/html" title="Jenkins: executing script over ssh in a pipeline" /><published>2024-10-13T00:00:00+02:00</published><updated>2024-10-13T00:00:00+02:00</updated><id>http://localhost:4000/blog/jenkins-executing-script-pipeline</id><content type="html" xml:base="http://localhost:4000/blog/jenkins-executing-script-pipeline"><![CDATA[<p>This article explains how to use the Jenkins Pipeline with the sshPublisher plugin to run a bash script on a remote 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-15T21:06:10+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">The optimal Docker image for Spring Boot. Part 1</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-1" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 1" /><published>2024-10-14T00:00:00+02:00</published><updated>2024-10-14T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-1</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-1"><![CDATA[<p>This article discusses popular methods for packaging a Spring Boot application into a Docker container, 
+emphasizing the importance of optimal packaging to avoid security vulnerabilities. It explores four specific 
+approaches: a simple Dockerfile, building with the spring-boot-maven-plugin, using Google’s Jib plugin, and writing 
+an optimized Dockerfile. The article also provides practical steps for building and running the application, along 
+with an analysis of the resulting Docker image.</p>
+
+<hr />
+
+<div class="Article-Text"><span><div>Let's consider popular ways to package an application into a container. We'll write our optimal Dockerfile for
+    Spring Boot.
+</div>
+<div><br /></div>
+<div>We live in the era of microservices architecture, and containers have become the primary means of packaging and
+    delivering applications to various environments. However, many developers do not pay enough attention to how to
+    properly package a service, how to do it optimally, and most importantly, how not to leave security holes. In this
+    article, we will explore 4 packaging methods:
+</div>
+<div><br /></div>
+<div>- Simple Dockerfile - build and get the image.</div>
+<div>- Building with the spring-boot-maven-plugin.</div>
+<div>- Using the special Jib plugin from Google.</div>
+<div>- Writing an optimized Dockerfile.</div>
+<br />
+<div>For experiments, we will use the following project: github.com/Example-uPagge/spring_boot_docker. This is a Spring
+    Boot application that contains a couple of simple controllers and repositories with an H2 database.
+</div>
+<h2>Simple Dockerfile</h2>
+<div>A typical Dockerfile that developers write looks like this:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"><div>
+FROM openjdk:17.0.2-jdk-slim-buster
+</div>
+<div>ARG JAR_FILE=target/*.jar</div>
+<div>COPY ${JAR_FILE} app.jar</div>
+<div>ENTRYPOINT ["java","-jar","/app.jar"]</div>
+</pre>
+
+<div><br /></div>
+<div>
+    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00007-1.jpg" />
+    <br /></div>
+<div><br /></div>
+<div>Like a cake, a Docker image consists of a stack of layers. Each represents a change from the previous layer. When
+    we pull a Docker image from the registry, it is pulled layer by layer and cached on the host.
+</div>
+<div><br /></div>
+<div>Our typical Docker image consists of a base layer with Linux - the thinner, the better. Then comes the JDK layer.
+    And on top is the application layer, which is effectively just a jar file.
+</div>
+<div><br /></div>
+<div>Spring Boot uses the "Fat JAR" packaging format by default. This means that all dependencies required for execution
+    are added to a single JAR file.
+</div>
+<div><br /></div>
+<div>But enough theory, let's move on to practice. To obtain the image, first build the application using Maven:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">mvn clean package</pre>
+<div>Then build the image:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">docker build -t upagge/spring-boot-docker:dockerfile .</pre>
+<div>In this case, 'upagge' is your DockerHub login, 'spring-boot-docker' is the image name, and 'dockerfile' is the
+    tag. If you do not plan to push the image to DockerHub, you can specify the name without using the login. For
+    example:
+</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">docker build -t spring-boot-docker:0.0.1 .</pre>
+<div>To analyze the image, use the dive utility. Dive allows you to show differences between layers: which files were
+    added, changed, or removed.
+</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">dive upagge/spring-boot-docker:dockerfile</pre>
+<div><br /></div>
+<div>
+    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00007-2.jpg" /><br /></div>
+<div><br /></div>
+<div>The total size of the image is 448 MB, of which:</div>
+<div><br /></div>
+<div>
+    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00007-3.jpg" /><br /></div>
+<div>
+    <ul>
+        <li>63+8.4 MB is the Linux layer.</li>
+        <li>324 MB is the JDK size.</li>
+        <li>53 MB is our spring-boot-jar.</li>
+    </ul>
+</div>
+<div>Pay attention to the application layer size: 53 megabytes, even though the project contains almost no code. With
+    any code change, we would have to send 53 megabytes over the network and the server would have to download 53
+    megabytes. The other layers are unlikely to change, so Docker will not transmit them over the network and will use
+    the cache. We'll figure out how to fix this shortly.
+</div>
+<div><br /></div>
+<div>To ensure everything works, run the image with the command:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">docker run -p 8080:8080 upagge/spring-boot-docker:0.0.1</pre>
+<div>Open a browser and go to: http://localhost:8080/api/person/1. If the image was started successfully, you will see
+    the word 'valid' in response.
+</div>
+<div><br /></div><h3>Conclusions on Dockerfile</h3>
+<div>This is how easily and simply we can package an application. However, this approach has several drawbacks that we
+    will address shortly.
+</div>
+<div><br /></div>
+<div>Pros of this approach:</div>
+<div>
+    <ul>
+        <li>Full control. You can build your image as you like.</li>
+        <li>Fairly simple method.</li>
+    </ul>
+</div>
+<div>Cons:</div>
+<div>
+    <ul>
+        <li>Full control. You can break something or create a security hole.</li>
+        <li>We haven't even started development, and the image is already heavy.</li>
+        <li>A large volume of changing layers.</li>
+        <li>Runs as root user.</li>
+    </ul>
+</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimisation" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[The article outlines various methods for packaging a Spring Boot application into a Docker container, highlighting best practices and practical implementation steps.]]></summary></entry><entry><title type="html">Jenkins: executing script over ssh in a pipeline</title><link href="http://localhost:4000/blog/jenkins-executing-script-pipeline" rel="alternate" type="text/html" title="Jenkins: executing script over ssh in a pipeline" /><published>2024-10-13T00:00:00+02:00</published><updated>2024-10-13T00:00:00+02:00</updated><id>http://localhost:4000/blog/jenkins-executing-script-pipeline</id><content type="html" xml:base="http://localhost:4000/blog/jenkins-executing-script-pipeline"><![CDATA[<p>This article explains how to use the Jenkins Pipeline with the sshPublisher plugin to run a bash script on a remote 
 server. It covers key steps, such as setting up server authentication by generating and copying SSH keys, configuring 
 Jenkins with the necessary plugin, and running the pipeline to transfer and execute files remotely. The final step is 
 testing and verifying the pipeline output on the remote server.</p>
@@ -652,35 +770,4 @@ Projects will be showcased in a card-list format where each card will contain</p
   <h1 id="browse-to-httplocalhost4000">Browse to <a href="http://localhost:4000/" target="_blank"><code class="language-plaintext highlighter-rouge">http://localhost:4000/</code></a></h1>
 </blockquote>
 
-<h6 id="on-encountering-any-problem-while-building-and-serving-your-jekyll-site-you-can-consider-visiting-to-the-troubleshooting-page">On encountering any problem while building and serving your Jekyll site you can consider visiting to the <a href="https://jekyllrb.com/docs/troubleshooting/#configuration-problems" target="_blank">troubleshooting</a> page</h6>]]></content><author><name></name></author><category term="jekyll" /><category term="informative" /><category term="technology" /><summary type="html"><![CDATA[Jekyll is a static site generator. You give it text written in your favorite markup language and it uses layouts to create a static website.]]></summary></entry><entry><title type="html">Welcome to my blog!</title><link href="http://localhost:4000/blog/welcome" rel="alternate" type="text/html" title="Welcome to my blog!" /><published>2019-01-01T00:00:00+02:00</published><updated>2019-01-01T00:00:00+02:00</updated><id>http://localhost:4000/blog/welcome</id><content type="html" xml:base="http://localhost:4000/blog/welcome"><![CDATA[<p>Welcome! I am Roman Surkoff, an experienced Java developer with a proven track record of delivering high-quality 
-software solutions across various industries, including banking and government portals. I am passionate about 
-collaborating with teams to streamline development processes and skilled in mentoring junior developers.</p>
-
-<hr />
-
-<p><b>
-    Welcome to my blog!
-</b>
-<br /></p>
-
-<p>Hello everyone, I’m Roman Surkoff, an experienced and results-oriented Java developer with a passion for delivering 
-high-quality software solutions. With a strong track record of delivering successful projects across various industries, 
-including banking software and government portals, I’m dedicated to continuous learning and growth 
-in the field of software development.</p>
-
-<p><br /></p>
-
-<p>Throughout my career, I’ve been committed to collaborating with cross-functional teams to streamline the 
-software development process and enhance code quality. As a skilled team leader, I’ve effectively managed and mentored 
-junior developers, fostering a collaborative and productive work environment.</p>
-
-<p><br /></p>
-
-<p>Driven by the challenge of solving complex problems, I thrive in dynamic environments where I can apply my strong 
-problem-solving skills and attention to detail. My focus is on delivering exceptional results, surpassing customer 
-expectations, and contributing to the success of forward-thinking organizations.</p>
-
-<p><br /></p>
-
-<p>I’m excited to share my insights and experiences with you through this blog. Stay tuned for valuable content on 
-software development, technology, and more. Thank you for joining me on this journey!</p>]]></content><author><name></name></author><category term="hello-world" /><category term="post" /><category term="about" /><category term="welcome" /><summary type="html"><![CDATA[Welcome! I am Roman Surkoff, an experienced Java developer with a proven track record of delivering high-quality software solutions in banking and government sectors while collaborating with teams and mentoring junior developers.]]></summary></entry></feed>
+<h6 id="on-encountering-any-problem-while-building-and-serving-your-jekyll-site-you-can-consider-visiting-to-the-troubleshooting-page">On encountering any problem while building and serving your Jekyll site you can consider visiting to the <a href="https://jekyllrb.com/docs/troubleshooting/#configuration-problems" target="_blank">troubleshooting</a> page</h6>]]></content><author><name></name></author><category term="jekyll" /><category term="informative" /><category term="technology" /><summary type="html"><![CDATA[Jekyll is a static site generator. You give it text written in your favorite markup language and it uses layouts to create a static website.]]></summary></entry></feed>
