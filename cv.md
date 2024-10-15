@@ -80,5 +80,4 @@ Working timeline
         </ul>
     </div>
 </div>
-
 <script src="{{site.url}}{{site.baseurl}}/assets/js/toggle-timeline.js"></script>
