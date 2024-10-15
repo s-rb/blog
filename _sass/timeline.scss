@@ -101,7 +101,7 @@ $media-breakpoint-xxs: 399px;
 }
 
 .timeline-item-content a::after {
-    content: ' ►';
+    content: '►';
     font-size: 0.7rem;
 }
 
@@ -195,33 +195,33 @@ $media-breakpoint-xxs: 399px;
     display: none;
 }
 
-/* Показываем нерелевантный опыт при активации чекбокса */
-.toggle-checkbox:checked ~ .timeline-container .timeline-list .not-relevant {
+.not-relevant-sum {
     display: flex;
 }
 
-/* Скрываем сам чекбокс */
-.toggle-checkbox {
-    display: none;
-}
-
 /* Стили для кнопки */
-.toggle-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4169e1;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
+.timeline-toggle-button {
     cursor: pointer;
-    text-align: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    line-height: 20px;
+    width: 10rem;
+    padding: 4px;
+    transition: all 0.25s ease;
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
-/* Изменение текста на кнопке при нажатии */
-.toggle-checkbox:checked + .toggle-button::after {
-    content: " Show Less";
+.timeline-hr {
+    background-color: $dark-color;
+    width: 75%;
+    position: relative;
+    z-index: 1;
 }
-.toggle-checkbox:not(:checked) + .toggle-button::after {
-    content: " Show More";
+
+.engineering-experience-msg {
+    background-color: #fff;
+    z-index: 2;
+    width: 100%;
+    margin: 5px;
 }

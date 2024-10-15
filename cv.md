@@ -31,8 +31,6 @@ Working timeline
 </h3>
 
 <div class="timeline">
-    <input type="checkbox" id="toggle" class="toggle-checkbox container has-text-centered has-background-grey-darker">
-    <label for="toggle" class="toggle-button container has-text-centered has-background-grey-darker"></label>
     <div class="timeline-container">
         <ul class="timeline-list">
             {% for item in site.data.work_experience.experience %}
@@ -47,6 +45,26 @@ Working timeline
                 </div>
             </li>
             {% endfor %}
+            <div></div>
+            <div class="engineering-experience-msg">
+                <div><hr class="timeline-hr"/></div>
+                <div>Other experience</div>
+                <div class="container timeline-toggle-button has-text-centered has-background-grey-darker has-text-white">SHOW DETAILS</div>
+                <div><hr class="timeline-hr"/></div>
+            </div>
+            {% for item in site.data.work_experience.engineering_experience %}
+            <li class="timeline-item not-relevant-sum">
+                <div class="timeline-item-content">
+                    <div class="timeline-position has-text-white">{{ item.position }}</div>
+                    <div class="timeline-period has-text-white">{{ item.period }}</div>
+                    <a class="timeline-company-url has-text-white" href="/" target="_blank" rel="noopener noreferrer">
+                        {{ item.company }}
+                    </a>
+                    <span class="circle"></span>
+                </div>
+            </li>
+            {% endfor %}
+            <div></div>
             {% for item in site.data.work_experience.not_relevant_experience %}
             <li class="timeline-item not-relevant">
                 <div class="timeline-item-content">
@@ -62,3 +80,5 @@ Working timeline
         </ul>
     </div>
 </div>
+
+<script src="{{site.url}}{{site.baseurl}}/assets/js/toggle-timeline.js"></script>
