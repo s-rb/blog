@@ -1,4 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-16T18:19:11+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">The optimal Docker image for Spring Boot. Part 2</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-2" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 2" /><published>2024-10-15T00:00:00+02:00</published><updated>2024-10-15T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-2</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-2"><![CDATA[<p>This article discusses the use of the spring-boot-maven-plugin to simplify the process of packaging Spring Boot 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-16T18:29:31+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">The optimal Docker image for Spring Boot. Part 3</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-3" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 3" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-3</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-3"><![CDATA[<p>The Jib plugin is an open-source tool developed by Google that allows developers to build Docker images without 
+needing Docker installed or writing a Dockerfile. It integrates directly with Maven and Gradle, creating Docker 
+images by layering dependencies and resources efficiently. Jib also supports both local and remote builds, sending 
+images directly to registries like Docker Hub, while producing slightly larger images compared to traditional methods.</p>
+
+<hr />
+
+<div class="Article-Text"><span><h2>Jib plugin</h2>
+<div>This is an open-source tool from Google that doesn't require Docker to work. You also don't need to write a
+    Dockerfile.
+</div>
+<div><br /></div>
+<div>To use Jib, add the following to your pom.xml:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">
+&lt;build&gt;
+&nbsp; &nbsp; &lt;plugins&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;plugin&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;artifactid&gt;spring-boot-maven-plugin&lt;/artifactid&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/plugin&gt;
+&nbsp; &nbsp; &lt;/plugins&gt;
+&lt;/build&gt;
+</pre>
+<div><br /></div>
+<h2>Building without Docker</h2>
+<div>One of the advantages of this plugin is building without installing Docker:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    mvn compile jib:build
+</pre>
+<div><br /></div>
+<div>After the build, I searched for the image in my local storage. Then it hit me. In this mode, Docker is not used, so
+    the image was sent to the registry on Docker Hub.
+</div>
+<div>Pull the image and analyze it using dive:</div>
+<div><br /></div>
+<div>
+    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00009-1.jpg" />
+    <br />
+</div>
+<div><br /></div>
+<div>The final weight came out to be 321 MB, which is 12 megabytes more than the previous method. Among them:</div>
+<div><br /></div>
+<div>
+    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00009-2.jpg" />
+    <br />
+</div>
+<div><br /></div>
+<div>
+    <ul>
+        <li>78 + 48 MB - Linux and various certificates.</li>
+        <li>140 MB - JDK.</li>
+        <li>55 MB - layer with release dependencies.</li>
+        <li>14 KB - layer with snapshot dependencies.</li>
+        <li>981 bytes - only resources. Resources folder.</li>
+        <li>22 KB - our written code.</li>
+    </ul>
+</div>
+<div>Jib runs your image on behalf of the root user.</div>
+<div>Similar to the Spring plugin, Jib separates dependencies into separate layers, but it goes even further and creates
+    a separate layer for the resources folder. After all, resources are also rarely changed but can weigh a lot. For
+    example, if you have many Liquibase migration scripts.
+</div>
+<h2>Building using Docker</h2>
+<div>For this, add the plugin as in the previous step but run a different command:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    mvn compile jib:dockerBuild
+</pre>
+<div><br /></div>
+<div>The size and structure of the layers are no different from the image we built without Docker.</div>
+<h2>Conclusions on Jib</h2>
+<div>If you have an ARM processor, the image will still be built for amd64.</div>
+<div>I have never used this plugin in projects, only heard about it, so I can't make any deep conclusions. It surprised
+    me that it can work without Docker; sometimes this can be useful. But I don't see the point in using it when there
+    is a Spring plugin available.
+</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[Jib is a Google tool that simplifies building Docker images without Docker, optimizing image layers and supporting direct registry deployment.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 2</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-2" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 2" /><published>2024-10-15T00:00:00+02:00</published><updated>2024-10-15T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-2</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-2"><![CDATA[<p>This article discusses the use of the spring-boot-maven-plugin to simplify the process of packaging Spring Boot 
 applications into Docker images. The plugin allows developers to easily create a Docker image without manually writing 
 a Dockerfile, while also optimizing the image structure by layering dependencies for better caching. The article 
 explains how to configure the image name, build the Docker image using Maven, and analyze the resulting layers for more 
@@ -717,85 +792,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id finibus nisl.
 <p><a href="https://giphy.com/gifs/laughing-despicable-me-minions-ZqlvCTNHpqrio">via GIPHY</a></p>
 
 <p><strong>YouTUbe Videos will look like:</strong><br /></p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jTPXwbDtIpA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>]]></content><author><name></name></author><category term="sample" /><category term="post" /><category term="test" /><summary type="html"><![CDATA[A sample post to show how the content will look and how will different headlines, quotes and codes will be represented.]]></summary></entry><entry><title type="html">How to Install and use WhatATheme?</title><link href="http://localhost:4000/blog/how-to-install-whatatheme" rel="alternate" type="text/html" title="How to Install and use WhatATheme?" /><published>2020-04-22T00:00:00+02:00</published><updated>2020-04-22T00:00:00+02:00</updated><id>http://localhost:4000/blog/how-to-install-whatatheme</id><content type="html" xml:base="http://localhost:4000/blog/how-to-install-whatatheme"><![CDATA[<h1 id="what-is-whatatheme">What is WhatATheme?</h1>
-<blockquote>
-  <p>You’ll find this post in your <strong><em>_posts</em></strong> directory. Go ahead and edit it and re-build the site to see your changes. &gt;You can rebuild the site in many different ways, but the most common way is to run <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
-</blockquote>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VfPa2c9kwhQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-<hr />
-
-<p><strong>WhatATheme</strong> is a customizable Jekyll Portfolio theme which supports blogging. You can use this theme in order to create an elegant, fully responsive portfolio which includes</p>
-
-<h3 id="home-page--">Home Page -</h3>
-<ul>
-  <li>A Hero section - A section where you can outsource an image which will work as the background for the particular section; it also will include your name and a tagline which can be easily manipulated via the _config.yml file.</li>
-  <li>An About section - A section where you can include your image and a 60 word paragraph which again you can easily manipulate using the _config.yml file.</li>
-  <li>A Contact section - A section where you can include 3 direct ways to contact<br />
-<code class="language-plaintext highlighter-rouge">Ping on Messenger</code><br />
-<code class="language-plaintext highlighter-rouge">Send an Email</code><br />
-<code class="language-plaintext highlighter-rouge">Tweet on Twitter</code><br />
-The contact section will also include 10 different social media buttons for your audience to follow.<br />
-<code class="language-plaintext highlighter-rouge">Facebook</code>, <code class="language-plaintext highlighter-rouge">Twitter</code>, <code class="language-plaintext highlighter-rouge">Instagram</code>, <code class="language-plaintext highlighter-rouge">LinkedIn</code>, <code class="language-plaintext highlighter-rouge">GitHub</code>, <code class="language-plaintext highlighter-rouge">YouTube</code>, <code class="language-plaintext highlighter-rouge">Reddit</code>, <code class="language-plaintext highlighter-rouge">Behance</code>, <code class="language-plaintext highlighter-rouge">Dribbble</code> &amp; <code class="language-plaintext highlighter-rouge">Spotify</code>.</li>
-</ul>
-
-<h3 id="blog--">Blog -</h3>
-<p>The blog includes a horizontal card list where the latest articles are fetched from the _posts folder automatically in top-down format. It also includes an instant search box which matches your query from the title, description &amp; content of your post and shows the result as soon as you type.<br />
-The blog card includes</p>
-<ul>
-  <li>Post Title</li>
-  <li>300 words from the content of the post</li>
-  <li>The publish date</li>
-  <li>The time which will be required to read the post.</li>
-</ul>
-
-<h3 id="projects--">Projects -</h3>
-<p>The Projects page will include all the projects from the <strong><code class="language-plaintext highlighter-rouge">projects.yml</code></strong> file which is present in the _data folder.<br />
-Projects will be showcased in a card-list format where each card will contain</p>
-<ul>
-  <li>An image related to the project</li>
-  <li>A Project Title</li>
-  <li>A Project Description of about 80 words</li>
-</ul>
-
-<h3 id="footer--">Footer -</h3>
-<p>The footer includes</p>
-<ul>
-  <li>A small about the author widget which show the same <code class="language-plaintext highlighter-rouge">Author Image</code> as mentioned in the about section of the Home page which includes <code class="language-plaintext highlighter-rouge">Name of the Author</code>, <code class="language-plaintext highlighter-rouge">Around 75 words about the author</code>.</li>
-  <li>A more link widget which includes a link to any extra page that you’ve created and a <code class="language-plaintext highlighter-rouge">Subscribe via RSS</code> link.</li>
-  <li>A Recent posts widget which will include latest 3 posts.</li>
-</ul>
-
-<h4 id="extra-features--">Extra Features -</h4>
-<p>WhatATheme comes pre installed with</p>
-<ul>
-  <li><strong>HTML Compressor</strong> - It’ll compress all the pages by removing any extra space or blank lines.</li>
-  <li><strong>Google Analytics</strong> - A web analytics service offered by Google that tracks and reports website traffic. For more information <a href="https://analytics.google.com" target="blank">click here</a>.</li>
-  <li>
-    <p><strong>Disqus</strong> - A worldwide blog comment hosting service for web sites and online communities that use a networked platform. For more information about Disqus <a href="https://help.disqus.com/en/articles/1717053-what-is-disqus" target="blank">click here</a></p>
-
-    <p>##### For more information about WhatATheme <a href="https://github.com/thedevslot/WhatATheme/blob/gh-pages/README.md" target="blank">click here</a>.</p>
-  </li>
-</ul>
-
-<hr />
-
-<h1 id="installation">Installation</h1>
-<h3 id="step-1---setting-up-whatatheme">Step 1 - Setting up WhatATheme</h3>
-<blockquote>
-  <ul>
-    <li>Fork the <a href="https://github.com/thedevslot/WhatATheme/tree/master" target="blankl">repository</a></li>
-    <li>Go to repository settings and set Github Pages source as master.</li>
-    <li>Your new site should be ready at <a href="#" target="blank">https://username.github.io/WhatATheme/</a></li>
-  </ul>
-</blockquote>
-
-<h3 id="step-2---making-changes-via-_configyml">Step 2 - Making changes via <strong>_config.yml</strong></h3>
-<blockquote>
-  <ul>
-    <li>Open _config.yml file</li>
-    <li>Fill the available details accordingly</li>
-    <li>Commit the changes</li>
-  </ul>
-</blockquote>]]></content><author><name></name></author><category term="how to" /><category term="setup" /><category term="theme" /><summary type="html"><![CDATA[This post will guide you to install WhatATheme on your Jekyll site, follow the easy steps to set up WhatATheme.]]></summary></entry></feed>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jTPXwbDtIpA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>]]></content><author><name></name></author><category term="sample" /><category term="post" /><category term="test" /><summary type="html"><![CDATA[A sample post to show how the content will look and how will different headlines, quotes and codes will be represented.]]></summary></entry></feed>
