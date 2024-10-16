@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-16T18:29:31+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">The optimal Docker image for Spring Boot. Part 3</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-3" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 3" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-3</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-3"><![CDATA[<p>The Jib plugin is an open-source tool developed by Google that allows developers to build Docker images without 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-16T19:02:47+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">The optimal Docker image for Spring Boot. Part 3</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-3" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 3" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-3</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-3"><![CDATA[<p>The Jib plugin is an open-source tool developed by Google that allows developers to build Docker images without 
 needing Docker installed or writing a Dockerfile. It integrates directly with Maven and Gradle, creating Docker 
 images by layering dependencies and resources efficiently. Jib also supports both local and remote builds, sending 
 images directly to registries like Docker Hub, while producing slightly larger images compared to traditional methods.</p>
@@ -73,7 +73,172 @@ images directly to registries like Docker Hub, while producing slightly larger i
 <div>I have never used this plugin in projects, only heard about it, so I can't make any deep conclusions. It surprised
     me that it can work without Docker; sometimes this can be useful. But I don't see the point in using it when there
     is a Spring plugin available.
-</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[Jib is a Google tool that simplifies building Docker images without Docker, optimizing image layers and supporting direct registry deployment.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 2</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-2" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 2" /><published>2024-10-15T00:00:00+02:00</published><updated>2024-10-15T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-2</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-2"><![CDATA[<p>This article discusses the use of the spring-boot-maven-plugin to simplify the process of packaging Spring Boot 
+</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[Jib is a Google tool that simplifies building Docker images without Docker, optimizing image layers and supporting direct registry deployment.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 4</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-4" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 4" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-4</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-4"><![CDATA[<p>The article explores the process of building optimized Dockerfiles by reducing the size of the JDK using Java modules 
+and determining necessary dependencies with the jdeps tool. It also introduces multi-stage Docker builds, where the 
+JDK is custom-built in the first stage and then added to a minimal Linux image in the second stage, keeping the final 
+image as lightweight as possible. This approach not only reduces the image size but also enhances control over the 
+build, making it a flexible and efficient solution for large systems.</p>
+
+<hr />
+
+<div class="Article-Text"><span><h2>Advanced build with Dockerfile</h2>
+<div>If you want something done right, do it yourself. No plugin knows your application like you do. So the next level
+    is writing optimized Dockerfiles.
+</div>
+<div><br /></div>
+<div>The first thing we'll do is reduce the JDK size. This is possible thanks to modules added since Java 9. All classes
+    in the JDK have been divided into these modules. We will use only those that are truly necessary.
+</div>
+<div><br /></div>
+<div><img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00010-1.jpg" /><br /></div>
+<div><br /></div>
+<div>But how do you know which modules are needed for the application and which are not? Moreover, you must also
+    consider all application dependencies. If they use a class from a module you don't include, the application will
+    either fail to build or crash at runtime.
+</div>
+<div><br /></div>
+<div>To determine the necessary modules, use the jdeps utility located in the bin folder of your JDK. But first, we need
+    to build our JAR and get all dependencies. To do this, run the command:
+</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"><div>mvn clean install dependency:copy-dependencies</div></pre>
+<div><br /></div>
+<div>Scan all the obtained JARs:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"><div>jdeps --ignore-missing-deps -q -recursive --multi-release 9 --print-module-deps --class-path 'target/dependency/*' target/*.jar</div></pre>
+<div><br /></div>
+<div>The --multi-release 9 flag may not be suitable for you; try changing it.</div>
+<div><br /></div>
+<div>This command will output the module names used by the application and all dependencies. In my case, they are:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"><div>java.base, java.compiler, java.desktop, java.instrument, java.management, java.prefs, java.rmi, java.scripting, java.security.jgss, java.sql.rowset, jdk.httpserver, jdk.jfr, jdk.unsupported</div></pre>
+<div><br /></div>
+<div>Now that we know which JDK modules are involved in the application, let's build our custom JDK from these modules
+    using the jlink utility.
+</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"><div>jlink --add-modules [your_modules_here] --strip-debug --no-man-pages --no-header-files --compress=2 --output javaruntime</div></pre>
+<div><br /></div>
+<div>Replace the value for the --add-modules flag with the package names found by jdeps. After running this command, you
+    will get a javaruntime folder in the project root. This is a trimmed-down version of the JDK specifically for your
+    JAR. In my case, the trimmed version weighs 50 MB, while the full JDK weighs 315 MB.
+</div>
+<div><br /></div>
+<div>Now let's optimize the spring-boot-jar. I think it's no secret that you can simply unpack the spring-boot-jar using
+    an archiver:
+</div>
+<div><br /></div>
+<div><img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00010-2.jpg" /><br /></div>
+<div><br /></div>
+<div>Here you can find all dependencies, including Tomcat, code, and application resources. It makes sense to organize
+    everything into layers as spring-plugin and Jib do.
+</div>
+<div><br /></div>
+<div>But before unpacking our JAR with an archiver, let's use the layertools utility. It allows us to unpack our JAR a
+    bit smarter.
+</div>
+<div><br /></div>
+<div>Create a separate folder and navigate to it:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"><div>mkdir build-app &amp;&amp; cd build-app</div></pre>
+<div><br /></div>
+<div>Then run the unpacking command:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"><div>java -Djarmode=layertools -jar ../target/*.jar extract</div></pre>
+<div><br /></div>
+<div>You should see four folders:</div>
+<div>
+    <ul>
+        <li>application: Your code is here.</li>
+        <li>snapshot-dependencies: Snapshot dependencies are here.</li>
+        <li>spring-boot-loader: Spring boot loaders are here.</li>
+        <li>dependencies: Release dependencies are here.</li>
+    </ul>
+</div>
+
+
+<div>Now it's time to combine all this knowledge into a single Dockerfile.</div>
+<div><br /></div>
+<div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    <div>FROM eclipse-temurin:17 as app-build</div>    <div>ENV RELEASE=17</div><br /><div>WORKDIR /opt/build</div>    <div>COPY ./target/spring-boot-*.jar ./application.jar</div><br /><div>RUN java -Djarmode=layertools -jar application.jar extract</div>    <div>RUN $JAVA_HOME/bin/jlink \</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;--add-modules `jdeps --ignore-missing-deps -q -recursive --multi-release
+        ${RELEASE} --print-module-deps -cp 'dependencies/BOOT-INF/lib/*':'snapshot-dependencies/BOOT-INF/lib/*'
+        application.jar` \<br /></div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;--strip-debug \</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;--no-man-pages \</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;--no-header-files \</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;--compress=2 \</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;--output jdk</div>    <div>FROM debian:buster-slim</div>    <div>ARG BUILD_PATH=/opt/build</div>    <div>ENV JAVA_HOME=/opt/jdk</div>    <div>ENV PATH "${JAVA_HOME}/bin:${PATH}"</div>    <div>RUN groupadd --gid 1000 spring-app \</div><div>&nbsp; &amp;&amp; useradd --uid 1000 --gid spring-app --shell /bin/bash --create-home spring-app</div>    <div>USER spring-app:spring-app</div>    <div>WORKDIR /opt/workspace</div>    <div>COPY --from=app-build $BUILD_PATH/jdk $JAVA_HOME</div>    <div>COPY --from=app-build $BUILD_PATH/spring-boot-loader/ ./</div><br /><div>COPY --from=app-build $BUILD_PATH/dependencies/ ./</div>    <div>COPY --from=app-build $BUILD_PATH/snapshot-dependencies/ ./</div>    <div>COPY --from=app-build $BUILD_PATH/application/ ./</div>    <div>ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]</div>
+</pre>
+    <div><br /></div>
+    <div>
+        <div>If the project does not use snapshot dependencies, remove 'snapshot-dependencies/BOOT-INF/lib/' from the
+            jlink command. Otherwise, the build will fail because the /BOOT-INF/lib/ folders will not exist.
+        </div>
+        <div><br /></div>
+        <div>To build this Dockerfile on Windows, replace
+            'dependencies/BOOT-INF/lib/':'snapshot-dependencies/BOOT-INF/lib/' with
+            'dependencies/BOOT-INF/lib/';'snapshot-dependencies/BOOT-INF/lib/'. The difference lies in the delimiter:
+            Linux uses ':', while Windows uses ';'.
+        </div>
+        <div>It may look intimidating, but by now, you are familiar with most of it. Don't forget to run the command mvn
+            clean package to get the target folder with the JAR file.
+        </div>
+        <div><br /></div>
+        <div>The Dockerfile contains 2 FROM commands. This is called a multi-stage build. In the first stage, we build
+            the necessary JDK for our application, and in the second stage, we build the image. The subtlety here is
+            that in the second build stage, we only take the necessary files, namely the JDK files.
+        </div>
+        <div><br /></div>
+        <div>Let's break down the first stage. It doesn't matter which base image you specify; the important thing is
+            that JDK is installed there. We transfer our JAR there, then unpack it, determine the dependencies used, and
+            build the JDK. With that, the first build stage is complete. Let's move on to the second stage.
+        </div>
+        <div><br /></div>
+        <div>Here, as the base image, we use an image on which the application will run at runtime. Usually, this is the
+            thinnest possible Linux. Next, we specify the JAVA_HOME environment variable and add it to PATH.
+        </div>
+        <div><br /></div>
+        <div>After that, we copy our JDK and JAR layers from the previous build stage. To do this, along with COPY, we
+            use the --from=app-build flag, which indicates that we are copying files not from our machine but from the
+            build stage under the alias app-build. Don't forget about the sequence; the less chance of a layer changing,
+            the earlier it is specified. The last line specifies the Spring loader that will launch our application.
+        </div>
+    </div>
+    <div><br /></div>
+    <div>If desired, you can also separate the resources folder into a separate layer.</div>
+    <div><br /></div>
+    <div>Let's explore the image layers. Our image weighs only 173 MB:</div>
+    <div><br /></div>
+    <div>
+        <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00010-3.jpg" /><br /></div>
+    <div>
+        <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00010-4.jpg" /></div>
+    <div>
+        <ul>
+            <li>63 MB — Linux;</li>
+            <li>338 KB — added due to user creation;</li>
+            <li>56 MB — our custom JDK;</li>
+            <li>53 MB — release dependencies;</li>
+            <li>252 KB — Spring loaders;</li>
+            <li>14 KB — snapshot dependencies;</li>
+            <li>34 KB — our code and resources.</li>
+        </ul>
+    </div>
+
+    <h2>Conclusions on Dockerfile-pro:</h2>
+    <div>We've eliminated almost all the downsides of Dockerfiles, turning them into advantages. With this build, you
+        have the opportunity to customize everything to your liking. It's worth noting that this is the smallest image
+        of all.
+    </div>
+    <div><br /></div>
+    <div>You can also use build capabilities for different platforms, a feature that plugins lack.</div>
+    <h2>In summary:</h2>
+    <div>In this article, we've explored various ways to create images. Each method has its pros and cons.</div>
+    <div><br /></div>
+    <div>If you need quick results, use the spring-boot-maven-plugin or Jib. Remember that they currently cannot build
+        images for ARM processors, and Jib runs the application on behalf of the root user.
+    </div>
+    <div><br /></div>
+    <div>A properly written Dockerfile will be the best option for a large system. Pay special attention to writing your
+        Dockerfile.
+    </div>
+
+</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[The article demonstrates how to write optimized Dockerfiles using multi-stage builds, minimizing the image size by customizing the JDK and organizing dependencies into layers.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 2</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-2" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 2" /><published>2024-10-15T00:00:00+02:00</published><updated>2024-10-15T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-2</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-2"><![CDATA[<p>This article discusses the use of the spring-boot-maven-plugin to simplify the process of packaging Spring Boot 
 applications into Docker images. The plugin allows developers to easily create a Docker image without manually writing 
 a Dockerfile, while also optimizing the image structure by layering dependencies for better caching. The article 
 explains how to configure the image name, build the Docker image using Maven, and analyze the resulting layers for more 
@@ -725,71 +890,4 @@ and websites.</p>
 
 <p><b>Download and start using icons today!</b></p>
 
-<p>You can check out these icons in my GitHub profile - <a href="https://github.com/s-rb">github.com/s-rb</a></p>]]></content><author><name></name></author><category term="icons" /><category term="post" /><category term="github" /><category term="profile" /><summary type="html"><![CDATA[Icons8 is a free resource offering a vast collection of icons in various styles and formats, perfect for enhancing the visual appeal of projects, presentations, and social media profiles]]></summary></entry><entry><title type="html">Sample Post</title><link href="http://localhost:4000/blog/sample-post" rel="alternate" type="text/html" title="Sample Post" /><published>2020-04-24T00:00:00+02:00</published><updated>2020-04-24T00:00:00+02:00</updated><id>http://localhost:4000/blog/sample-post</id><content type="html" xml:base="http://localhost:4000/blog/sample-post"><![CDATA[<p>This post will show you how the content will look like in the post pages and how the headlines, quotes and quotes will be represented. Jekyll is mainly used to write simple markdown and after that it renders out a static pages, so you need to know the basics of writing markdown for that.
-For more information about writing markdown you can checkout the following markdown cheatsheets:</p>
-<ul>
-  <li><a href="https://guides.github.com/features/mastering-markdown/">Mastering Markdown</a></li>
-  <li><a href="https://www.markdownguide.org/cheat-sheet/">Markdown Guide</a></li>
-  <li><a href="https://github.github.com/gfm/">GitHub Flavored Markdown Spec</a></li>
-</ul>
-
-<hr />
-
-<h1 id="this-is-the-h1-text">This is the h1 text</h1>
-<h2 id="this-is-the-h2-text">This is the h2 text</h2>
-<h3 id="this-is-the-h3-text">This is the h3 text</h3>
-<h4 id="this-is-the-h4-text">This is the h4 text</h4>
-<h5 id="this-is-the-h5-text">This is the h5 text</h5>
-<h6 id="this-is-the-h6-text">This is the h6 text</h6>
-
-<p><strong>Bold Text in the post will look like:</strong><br />
-<strong>This text is Bold</strong></p>
-
-<p><strong>Italic Text in the post will look like:</strong><br />
-<em>This text is Italic</em></p>
-
-<blockquote>
-  <p>Quotes on your post will look like this</p>
-</blockquote>
-
-<p><code class="language-plaintext highlighter-rouge">Codes on your post will look like this</code></p>
-
-<p><strong>Link in the post will look like:</strong><br />
-<a href="#">This is a link</a></p>
-
-<p><strong>Bullet list in the post will look like:</strong></p>
-<ul>
-  <li>Item 1</li>
-  <li>Item 2</li>
-  <li>Item 3</li>
-  <li>Item 4</li>
-  <li>Item 5</li>
-</ul>
-
-<p><strong>Number list in the post will look like:</strong></p>
-<ol>
-  <li>Item 1</li>
-  <li>Item 2</li>
-  <li>Item 3</li>
-  <li>Item 4</li>
-  <li>Item 5</li>
-</ol>
-
-<p><strong>Images in the post will look like:</strong><br />
-<img src="/WhatATheme/assets/images/1280x720%20Placeholder.png" alt="Test Image" /></p>
-
-<p><strong>Normal text in the post will look like</strong><br />
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id finibus nisl. Etiam in hendrerit est. Nulla non erat ac lectus interdum lobortis. Vestibulum at mi ex. Mauris nisl mi, venenatis et feugiat nec, finibus porttitor velit. Suspendisse tincidunt lobortis leo, quis tristique tellus iaculis quis. Donec eleifend pulvinar gravida. Proin non lorem eros. Donec sit amet finibus ex, eget vestibulum nunc. Ut ut enim id purus porttitor tristique. Vivamus tincidunt eleifend hendrerit. Proin metus felis, ultrices vel dui in, porta dapibus dui. Sed sagittis ex vitae dui tristique dignissim. Cras vel leo ipsum.</p>
-
-<p>Aenean ac neque et risus mattis accumsan. Sed ac tellus molestie, lacinia ante sit amet, convallis felis. Maecenas aliquet lectus nec euismod auctor. Donec finibus pellentesque tortor, ac efficitur metus suscipit non. Proin diam orci, blandit quis malesuada ac, efficitur a nisl. Mauris eleifend consequat blandit. Sed egestas quam et orci gravida, non euismod metus scelerisque. Curabitur venenatis pellentesque erat commodo pharetra. Fusce id ante nec ipsum fringilla auctor. In justo quam, feugiat placerat eleifend dapibus, luctus et quam. Fusce facilisis erat ut odio convallis viverra et id mauris. Sed vehicula tempus consectetur. Aliquam pharetra, purus non egestas tristique, tellus massa fringilla est, id sagittis tellus urna non mauris. Suspendisse fringilla, velit nec blandit facilisis, ligula ante imperdiet est, et placerat magna sem quis tortor.</p>
-
-<p>Vestibulum vitae fermentum velit, rhoncus egestas orci. Nulla at purus ut orci posuere vulputate. In eget leo diam. In congue in diam nec elementum. Suspendisse fringilla ante nulla, eu tristique orci ultrices eget. Aenean non lorem tellus. Vestibulum tempor metus sit amet tellus feugiat, sit amet consequat lacus ultricies.</p>
-
-<p>Donec imperdiet, lectus eget congue cursus, dolor enim finibus risus, ut molestie lorem tellus non tortor. Donec quam nibh, molestie in dapibus et, efficitur non tortor. Morbi orci tellus, mollis vel mi vitae, auctor lobortis erat. Ut gravida velit eget ligula lacinia, id rhoncus tellus gravida. Maecenas laoreet rutrum consequat. Suspendisse sed nibh dui. Curabitur dictum euismod mollis. Sed egestas libero libero, eu accumsan augue placerat non. Nunc id condimentum orci. Mauris vitae sollicitudin quam.</p>
-
-<p><strong>Giphy Gifs will look like:</strong><br /></p>
-<iframe src="https://giphy.com/embed/ZqlvCTNHpqrio" width="480" height="259" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
-<p><a href="https://giphy.com/gifs/laughing-despicable-me-minions-ZqlvCTNHpqrio">via GIPHY</a></p>
-
-<p><strong>YouTUbe Videos will look like:</strong><br /></p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jTPXwbDtIpA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>]]></content><author><name></name></author><category term="sample" /><category term="post" /><category term="test" /><summary type="html"><![CDATA[A sample post to show how the content will look and how will different headlines, quotes and codes will be represented.]]></summary></entry></feed>
+<p>You can check out these icons in my GitHub profile - <a href="https://github.com/s-rb">github.com/s-rb</a></p>]]></content><author><name></name></author><category term="icons" /><category term="post" /><category term="github" /><category term="profile" /><summary type="html"><![CDATA[Icons8 is a free resource offering a vast collection of icons in various styles and formats, perfect for enhancing the visual appeal of projects, presentations, and social media profiles]]></summary></entry></feed>
