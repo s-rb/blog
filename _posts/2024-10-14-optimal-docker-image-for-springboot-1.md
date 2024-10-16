@@ -7,7 +7,7 @@ description: The article outlines various methods for packaging a Spring Boot ap
 tags:
 - springboot
 - docker
-- optimisation
+- optimization
 - image
 - post
 ---
