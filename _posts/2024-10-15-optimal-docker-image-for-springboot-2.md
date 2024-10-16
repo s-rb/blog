@@ -30,17 +30,18 @@ efficient deployment.
 <p>First, in the plugin
     configuration, let's specify the name of the future image. If you don't specify a tag, it will automatically be set
     to the latest.</p>
-<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    <build>
-    &nbsp;&nbsp;<plugins>
-    &nbsp;&nbsp;&nbsp;&nbsp;<plugin>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<groupid>org.springframework.boot</groupid>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<artifactid>spring-boot-maven-plugin</artifactid>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<configuration>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<imagename>upagge/spring-boot-docker:spring-plugin</imagename>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<configuration>
-    &nbsp;&nbsp;&nbsp;&nbsp;<plugin>
-    &nbsp;&nbsp;<plugins>
-    </plugins></plugin></configuration></configuration></plugin></plugins></build>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">
+&lt;build&gt;
+    &nbsp;&nbsp;&lt;plugins&gt;
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;plugin&gt;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactid&gt;spring-boot-maven-plugin&lt;/artifactid&gt;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;configuration&gt;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;imagename&gt;upagge/spring-boot-docker:spring-plugin&lt;/imagename&gt;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/configuration&gt;
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/plugin&gt;
+    &nbsp;&nbsp;&lt;/plugins&gt;
+&lt;/build&gt;
 </pre>
 <pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);"># Image version
 # If you want to specify the image version, you can do so using Maven project variables:
