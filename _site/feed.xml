@@ -1,79 +1,234 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-17T18:51:54+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">The optimal Docker image for Spring Boot. Part 3</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-3" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 3" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-3</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-3"><![CDATA[<p>The Jib plugin is an open-source tool developed by Google that allows developers to build Docker images without 
-needing Docker installed or writing a Dockerfile. It integrates directly with Maven and Gradle, creating Docker 
-images by layering dependencies and resources efficiently. Jib also supports both local and remote builds, sending 
-images directly to registries like Docker Hub, while producing slightly larger images compared to traditional methods.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-18T19:12:26+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Roman Surkoff</title><subtitle>An experienced software engineer</subtitle><entry><title type="html">Deploying Keycloak on a VPS Using Docker-compose, Nginx, Certbot, and SSL</title><link href="http://localhost:4000/blog/deploying-keycloak-to-vps" rel="alternate" type="text/html" title="Deploying Keycloak on a VPS Using Docker-compose, Nginx, Certbot, and SSL" /><published>2024-10-17T00:00:00+02:00</published><updated>2024-10-17T00:00:00+02:00</updated><id>http://localhost:4000/blog/deploying-keycloak-to-vps</id><content type="html" xml:base="http://localhost:4000/blog/deploying-keycloak-to-vps"><![CDATA[<p>The article explains how to deploy Keycloak, an open-source identity management system, on a VPS using Docker-compose, 
+Nginx, Certbot, and SSL for secure access. It covers essential setup steps, including creating a domain, configuring 
+Nginx, setting up SSL certificates, and using Docker for deployment automation. The guide also details how to handle 
+automatic certificate renewal and import Keycloak realms during startup.</p>
 
 <hr />
 
-<div class="Article-Text"><span><h2>Jib plugin</h2>
-<div>This is an open-source tool from Google that doesn't require Docker to work. You also don't need to write a
-    Dockerfile.
+<div class="Article-Text"><span><div>Hello everyone!</div>
+<div><br /></div>
+<div>In this article, I would like to share how to deploy Keycloak on a VPS using Docker-compose, Nginx, Certbot, and
+    SSL.
+</div>
+<div><br /></div><h2>Key Points:</h2>
+<div>- Keycloak v.25.0.1</div>
+<div>- SSL protection for Keycloak</div>
+<div>- Certbot v.2.11.0 for obtaining and renewing SSL certificates</div>
+<div>- Nginx v.1.27.0 as a reverse proxy</div>
+<div>- Postgres v.14 to replace the default internal H2 DB of Keycloak</div>
+<div>- Automatic realm import during deployment</div>
+<div>- Docker-compose for deployment automation</div>
+<div>- .env file for managing environment variables</div>
+<div><br /></div>
+<div>For those who might not be familiar, Keycloak is a powerful access management system with SSO support that can
+    significantly simplify user management and authentication.
 </div>
 <div><br /></div>
-<div>To use Jib, add the following to your pom.xml:</div>
-<div><br /></div>
-<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">
-&lt;build&gt;
-&nbsp; &nbsp; &lt;plugins&gt;
-&nbsp; &nbsp; &nbsp; &nbsp; &lt;plugin&gt;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;artifactid&gt;spring-boot-maven-plugin&lt;/artifactid&gt;
-&nbsp; &nbsp; &nbsp; &nbsp; &lt;/plugin&gt;
-&nbsp; &nbsp; &lt;/plugins&gt;
-&lt;/build&gt;
-</pre>
-<div><br /></div>
-<h2>Building without Docker</h2>
-<div>One of the advantages of this plugin is building without installing Docker:</div>
-<div><br /></div>
-<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    mvn compile jib:build
-</pre>
-<div><br /></div>
-<div>After the build, I searched for the image in my local storage. Then it hit me. In this mode, Docker is not used, so
-    the image was sent to the registry on Docker Hub.
+<div>The desire to deploy your own Keycloak can arise both for experimenting with your projects and for handling your
+    usual backend tasks. This happened to me as well. I decided to kill two birds with one stone. However, I couldn't
+    find a comprehensive guide. I don't need Keycloak locally, but setting it up on a separate, always-available server
+    with backup and the ability to export/import realms, etc., is excellent. Plus, the deployment process is automated,
+    making it easier to switch to another VPS provider.
 </div>
-<div>Pull the image and analyze it using dive:</div>
 <div><br /></div>
-<div>
-    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00009-1.jpg" />
+<div>Everyone has their own motivation, but let's get to the point.</div>
+<div><br /></div>
+<h2>Introduction</h2>
+<br />
+<h4>What is Keycloak?</h4>
+<div>Keycloak is an open-source identity and access management solution. It provides features such as SSO (Single
+    Sign-On), user management, authentication, and authorization.
+</div>
+<br />
+<h4>Why Docker-compose?</h4>
+<div>Docker-compose makes it easy to manage multi-component applications like Keycloak and simplifies the deployment and
+    scaling process. This guide uses containers for Keycloak, Certbot, Nginx, and the Postgres database.
+</div>
+<br />
+<h4>Why Nginx and Certbot?</h4>
+<div>Nginx will act as a reverse proxy, ensuring security and performance, while Certbot will help obtain and
+    automatically renew SSL certificates from Let's Encrypt, saving us a couple of thousand rubles on certificates for
+    our domain, which is nice.
+</div>
+<div><br /></div>
+<div>Let's get started!</div>
+<div><br /></div><h2>Step 1: Preparing the Environment</h2><h4>Cloning the Repository</h4>
+<div>First, clone the repository with ready-made configurations to our VPS, which I have carefully prepared for you. It
+    contains docker-compose.yml for managing deployment, nginx configs, and an environment variables file needed for
+    docker-compose.
+</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    git clone git@github.com:s-rb/keycloak-dockerized-ssl-nginx.git
+    cd keycloak-dockerized-ssl-nginx</pre>
+<h4>Editing the .env File</h4>
+<div>Open the .env file and edit the following variables:</div>
+<div><br /></div>
+<div>- <span style="font-weight: bold;">KEYCLOAK_ADMIN_PASSWORD</span> - Admin password for accessing Keycloak</div>
+<div>- <span style="font-weight: bold;">KC_DB_PASSWORD</span> - Password for Keycloak service access to the Postgres DB
+    (should match `POSTGRES_PASSWORD` if a
+    separate user is not created)
+</div>
+<div>- <span style="font-weight: bold;">POSTGRES_PASSWORD</span> - Admin password for Postgres</div>
+<div><br /></div>
+<div>Replace `password` with your values unless you want anyone to connect to your services ;)</div>
+<div><br /></div>
+<div>Example of a complete environment variables file:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    KEYCLOAK_ADMIN=admin
+    KEYCLOAK_ADMIN_PASSWORD=password
+    PROXY_ADDRESS_FORWARDING=true
+    KC_PROXY=edge
     <br />
-</div>
-<div><br /></div>
-<div>The final weight came out to be 321 MB, which is 12 megabytes more than the previous method. Among them:</div>
-<div><br /></div>
-<div>
-    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00009-2.jpg" />
-    <br />
-</div>
-<div><br /></div>
-<div>
-    <ul>
-        <li>78 + 48 MB - Linux and various certificates.</li>
-        <li>140 MB - JDK.</li>
-        <li>55 MB - layer with release dependencies.</li>
-        <li>14 KB - layer with snapshot dependencies.</li>
-        <li>981 bytes - only resources. Resources folder.</li>
-        <li>22 KB - our written code.</li>
-    </ul>
-</div>
-<div>Jib runs your image on behalf of the root user.</div>
-<div>Similar to the Spring plugin, Jib separates dependencies into separate layers, but it goes even further and creates
-    a separate layer for the resources folder. After all, resources are also rarely changed but can weigh a lot. For
-    example, if you have many Liquibase migration scripts.
-</div>
-<h2>Building using Docker</h2>
-<div>For this, add the plugin as in the previous step but run a different command:</div>
-<div><br /></div>
-<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    mvn compile jib:dockerBuild
+    KC_DB=postgres
+    KC_DB_URL=jdbc:postgresql://keycloak-postgres:5432/keycloak
+    KC_DB_USERNAME=keycloak
+    KC_DB_PASSWORD=password
+    POSTGRES_DB=keycloak
+    POSTGRES_USER=keycloak
+    POSTGRES_PASSWORD=password
 </pre>
+<div><br /></div><h2>Step 2: Domain Registration and DNS Setup</h2>
+<div>This step can be done before the first step - it does not depend on it. In the following instructions, we assume
+    you have registered your domain (e.g., surkoff.com) and we want Keycloak to be accessible at
+    my-keycloak.surkoff.com.
+</div>
+<div><br /></div><h4>Domain Registration</h4>
+<div>Register a domain with any registrar, for example, REG.RU.</div>
+<div><br /></div><h4>Creating an A Record for the Subdomain</h4>
+<div>Create an A record pointing to your server's IP. For example, for the subdomain my-keycloak.surkoff.com, specify
+    your server's IP.
+</div>
 <div><br /></div>
-<div>The size and structure of the layers are no different from the image we built without Docker.</div>
-<h2>Conclusions on Jib</h2>
-<div>If you have an ARM processor, the image will still be built for amd64.</div>
-<div>I have never used this plugin in projects, only heard about it, so I can't make any deep conclusions. It surprised
-    me that it can work without Docker; sometimes this can be useful. But I don't see the point in using it when there
-    is a Spring plugin available.
-</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[Jib is a Google tool that simplifies building Docker images without Docker, optimizing image layers and supporting direct registry deployment.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 4</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-4" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 4" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-4</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-4"><![CDATA[<p>The article explores the process of building optimized Dockerfiles by reducing the size of the JDK using Java modules 
+<div><img style="height: auto; display: block; margin: auto; max-width: 400px;" src="https://blog.surkoff.com/images/upload/154/642/3137/7B48E32F52CFD5C1EB1CC54C926D363A.jpg" /><br /></div>
+<div><br /></div><h4>Checking the DNS Record</h4>
+<div>Ensure the DNS record is correctly configured:</div>
+<div><br /></div>
+<div>
+    <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">ping my-keycloak.surkoff.com</pre>
+</div>
+<div><br /></div>
+<div>The response should show your server's IP address.</div>
+<div><br /></div><h2>Step 3: Configuring Nginx</h2><h4>Nginx Configuration</h4>
+<div>In the nginx configs - `<span style="font-weight: bold;">default.conf_with_ssl</span>`, `<span style="font-weight: bold;">default.conf_without_ssl</span>` specify your domain:
+</div>
+<div><br /></div>
+<div>- In the `<span style="font-weight: bold;">server_name</span>` section</div>
+<div>- In the path to the certificate `<span style="font-weight: bold;">ssl_certificate</span>`</div>
+<div>- In the path to the key `<span style="font-weight: bold;">ssl_certificate_key</span>`</div>
+<div><br /></div>
+<div>Example configuration with SSL:</div>
+<div>
+    <div><pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">server {
+    listen 443 ssl;
+    server_name my-keycloak.surkoff.com;
+
+    ssl_certificate /etc/letsencrypt/live/my-keycloak.surkoff.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/my-keycloak.surkoff.com/privkey.pem;
+
+    location / {
+        proxy_pass http://keycloak:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}</pre>
+</div>
+<div><br /></div>
+</div>
+<h2>Step 4: Obtaining an SSL Certificate</h2>
+<h4>Obtaining a Test Certificate</h4>
+<div>Use the configuration without SSL:</div>
+<div>
+    <div><pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">cp nginx/conf.d/default.conf_without_ssl nginx/conf.d/default.conf
+docker-compose up -d</span></pre>
+    </div>
+    <div><br /></div>
+    <div>Obtain a test certificate (replace the domain and email with your own):</div>
+</div>
+<div>
+    <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">docker exec certbot certbot certonly --webroot --webroot-path=/data/letsencrypt -d my-keycloak.surkoff.com --email your_email@gmail.com --agree-tos --no-eff-email --staging</span></pre>
+</div><h4><img style="height: auto; display: block; margin: auto; max-width: 750px;" src="https://blog.surkoff.com/images/upload/-20/797/64064/784819F1E978B245B694B7749D3F054D.jpg" /><br /></h4>
+<h4>Checking the Certificate</h4>
+<div>
+    <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">docker exec certbot certbot certificates</span></pre>
+</div>
+<br />
+<h4>Deleting the Test Certificate (replace the domain with your own)</h4>
+<div>
+    <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">docker exec certbot certbot delete --cert-name my-keycloak.surkoff.com</span></pre>
+</div>
+<br />
+<h4>Obtaining a Real Certificate (replace email and domain with your own)</h4>
+<div>
+    <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">docker exec certbot certbot certonly --webroot --webroot-path=/data/letsencrypt -d my-keycloak.surkoff.com --email your_email@gmail.com --agree-tos --no-eff-email</span></pre>
+</div>
+<br />
+<h2>Step 5: Final Configuration and Launch</h2><h4>Updating Nginx Configuration to Use SSL</h4>
+<div><pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">docker-compose down
+cp nginx/conf.d/default.conf_with_ssl nginx/conf.d/default.conf
+docker-compose up -d</span></pre>
+</div>
+<br />
+<h4>Checking Access to Keycloak</h4>
+<div>Open a browser and go to my-keycloak.surkoff.com (your domain).</div>
+<div><br /></div>
+<div>You should see the admin login page where you can log in using the username and password you specified in the .env
+    file.
+</div>
+<div><br /></div>
+<div><img style="height: auto; display: block; margin: auto; max-width: 750px;" src="https://blog.surkoff.com/images/upload/-74/563/0311/DF270E9D92F17ACD5F10830A80BAC89E.jpg" /><br /></div>
+<div><br /></div>
+<div>For configuring Keycloak, there are interesting articles on other resources, which we won't cover in this
+    publication.
+</div>
+<div><br /></div><h4>Automatic Certificate Renewal</h4>
+<div>To automatically renew certificates and restart Nginx, create the `renew_and_reload.sh` script (already available
+    in the repository):
+</div>
+<div>
+    <div><pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">#!/bin/bash
+# Renew certificates
+docker exec certbot certbot renew --webroot --webroot-path=/data/letsencrypt
+
+# Restart Nginx
+docker restart nginx</span></pre>
+</div>
+</div>
+<div><br /></div>
+<div>Make the script executable:</div>
+<div>
+    <div>
+        <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">chmod +x renew_and_reload.sh</span></pre>
+    </div>
+</div>
+<div><br /></div>
+<div>Add it to crontab for regular execution:</div>
+<div>
+    <div>
+        <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">crontab -e</span></pre>
+    </div>
+</div>
+<div><br /></div>
+<div>Add a line to crontab, remembering to specify the path to the script:</div>
+<div>
+    <pre style="margin-top: 5px; margin-bottom: 5px; padding: 5px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: 18px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; max-width: 100%; overflow: auto;"><span style="color: rgb(64, 64, 64); font-family: Consolas, Monaco, Monospaced, monospace; font-size: 12px;">0 0 1 * * /path/to/renew_and_reload.sh</span></pre>
+</div>
+<br />
+<h2>Importing Realms</h2>
+<div>If you want to import a realm at startup, you can place it in the `<span style="font-weight: bold;">keycloak/config/</span>`
+    folder, and it
+    will be imported when the application starts.
+</div>
+<div><br /></div>
+<h2>Conclusion</h2>
+<div>That's it! Now you have a deployed latest&nbsp;<span style="font-weight: bold;">Keycloak</span> with <span style="font-weight: bold;">SSL</span> on your <span style="font-weight: bold;">VPS</span>. I hope this article
+    was helpful! If you have any
+    questions or suggestions, feel free to write to me in private messages.
+</div>
+<div><br /></div>
+<div>The source code is available at the link - <a href="https://github.com/s-rb/keycloak-dockerized-ssl-nginx">https://github.com/s-rb/keycloak-dockerized-ssl-nginx</a>.
+</div></span></div>]]></content><author><name></name></author><category term="keycloak" /><category term="docker" /><category term="ssl" /><category term="certbot" /><category term="vps" /><category term="nginx" /><summary type="html"><![CDATA[This article provides a step-by-step guide for deploying Keycloak on a VPS with Docker-compose, Nginx, Certbot, and SSL for secure access and automated deployment.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 4</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-4" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 4" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-4</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-4"><![CDATA[<p>The article explores the process of building optimized Dockerfiles by reducing the size of the JDK using Java modules 
 and determining necessary dependencies with the jdeps tool. It also introduces multi-stage Docker builds, where the 
 JDK is custom-built in the first stage and then added to a minimal Linux image in the second stage, keeping the final 
 image as lightweight as possible. This approach not only reduces the image size but also enhances control over the 
@@ -238,7 +393,82 @@ build, making it a flexible and efficient solution for large systems.</p>
         Dockerfile.
     </div>
 
-</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[The article demonstrates how to write optimized Dockerfiles using multi-stage builds, minimizing the image size by customizing the JDK and organizing dependencies into layers.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 2</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-2" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 2" /><published>2024-10-15T00:00:00+02:00</published><updated>2024-10-15T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-2</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-2"><![CDATA[<p>This article discusses the use of the spring-boot-maven-plugin to simplify the process of packaging Spring Boot 
+</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[The article demonstrates how to write optimized Dockerfiles using multi-stage builds, minimizing the image size by customizing the JDK and organizing dependencies into layers.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 3</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-3" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 3" /><published>2024-10-16T00:00:00+02:00</published><updated>2024-10-16T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-3</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-3"><![CDATA[<p>The Jib plugin is an open-source tool developed by Google that allows developers to build Docker images without 
+needing Docker installed or writing a Dockerfile. It integrates directly with Maven and Gradle, creating Docker 
+images by layering dependencies and resources efficiently. Jib also supports both local and remote builds, sending 
+images directly to registries like Docker Hub, while producing slightly larger images compared to traditional methods.</p>
+
+<hr />
+
+<div class="Article-Text"><span><h2>Jib plugin</h2>
+<div>This is an open-source tool from Google that doesn't require Docker to work. You also don't need to write a
+    Dockerfile.
+</div>
+<div><br /></div>
+<div>To use Jib, add the following to your pom.xml:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">
+&lt;build&gt;
+&nbsp; &nbsp; &lt;plugins&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;plugin&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;artifactid&gt;spring-boot-maven-plugin&lt;/artifactid&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/plugin&gt;
+&nbsp; &nbsp; &lt;/plugins&gt;
+&lt;/build&gt;
+</pre>
+<div><br /></div>
+<h2>Building without Docker</h2>
+<div>One of the advantages of this plugin is building without installing Docker:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    mvn compile jib:build
+</pre>
+<div><br /></div>
+<div>After the build, I searched for the image in my local storage. Then it hit me. In this mode, Docker is not used, so
+    the image was sent to the registry on Docker Hub.
+</div>
+<div>Pull the image and analyze it using dive:</div>
+<div><br /></div>
+<div>
+    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00009-1.jpg" />
+    <br />
+</div>
+<div><br /></div>
+<div>The final weight came out to be 321 MB, which is 12 megabytes more than the previous method. Among them:</div>
+<div><br /></div>
+<div>
+    <img style="height: auto; display: block; margin: auto; max-width: 500px;" src="/assets/images/posts/2024/00009-2.jpg" />
+    <br />
+</div>
+<div><br /></div>
+<div>
+    <ul>
+        <li>78 + 48 MB - Linux and various certificates.</li>
+        <li>140 MB - JDK.</li>
+        <li>55 MB - layer with release dependencies.</li>
+        <li>14 KB - layer with snapshot dependencies.</li>
+        <li>981 bytes - only resources. Resources folder.</li>
+        <li>22 KB - our written code.</li>
+    </ul>
+</div>
+<div>Jib runs your image on behalf of the root user.</div>
+<div>Similar to the Spring plugin, Jib separates dependencies into separate layers, but it goes even further and creates
+    a separate layer for the resources folder. After all, resources are also rarely changed but can weigh a lot. For
+    example, if you have many Liquibase migration scripts.
+</div>
+<h2>Building using Docker</h2>
+<div>For this, add the plugin as in the previous step but run a different command:</div>
+<div><br /></div>
+<pre style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 12px; line-height: 18px; font-family: Consolas, Monaco, Monospaced, monospace; margin-top: 5px; margin-bottom: 5px; padding: 5px; vertical-align: baseline; border: 1px solid rgb(154, 154, 154); outline: 0px; background-image: none; background-position: 0px 0px; background-repeat: repeat; background-attachment: scroll; background-color: rgb(241, 241, 241); max-width: 100%; overflow: auto; color: rgb(64, 64, 64);">    mvn compile jib:dockerBuild
+</pre>
+<div><br /></div>
+<div>The size and structure of the layers are no different from the image we built without Docker.</div>
+<h2>Conclusions on Jib</h2>
+<div>If you have an ARM processor, the image will still be built for amd64.</div>
+<div>I have never used this plugin in projects, only heard about it, so I can't make any deep conclusions. It surprised
+    me that it can work without Docker; sometimes this can be useful. But I don't see the point in using it when there
+    is a Spring plugin available.
+</div></span></div>]]></content><author><name></name></author><category term="springboot" /><category term="docker" /><category term="optimization" /><category term="image" /><category term="post" /><summary type="html"><![CDATA[Jib is a Google tool that simplifies building Docker images without Docker, optimizing image layers and supporting direct registry deployment.]]></summary></entry><entry><title type="html">The optimal Docker image for Spring Boot. Part 2</title><link href="http://localhost:4000/blog/optimal-docker-image-for-springboot-2" rel="alternate" type="text/html" title="The optimal Docker image for Spring Boot. Part 2" /><published>2024-10-15T00:00:00+02:00</published><updated>2024-10-15T00:00:00+02:00</updated><id>http://localhost:4000/blog/optimal-docker-image-for-springboot-2</id><content type="html" xml:base="http://localhost:4000/blog/optimal-docker-image-for-springboot-2"><![CDATA[<p>This article discusses the use of the spring-boot-maven-plugin to simplify the process of packaging Spring Boot 
 applications into Docker images. The plugin allows developers to easily create a Docker image without manually writing 
 a Dockerfile, while also optimizing the image structure by layering dependencies for better caching. The article 
 explains how to configure the image name, build the Docker image using Maven, and analyze the resulting layers for more 
@@ -859,35 +1089,4 @@ Access community-generated mapping data.
 <br /><strong>Usage:</strong> Unlimited requests.</p>
 
 <p><b>Conclusion</b>
-These 25 APIs offer a wide range of capabilities for developers, enabling the creation of innovative applications that integrate diverse data and functionality. Use them to enhance your projects and make them more interactive. <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji></p>]]></content><author><name></name></author><category term="api" /><category term="post" /><category term="developer" /><category term="free" /><summary type="html"><![CDATA[Here is a collection of 25 powerful free APIs that developers can leverage in 2024 to simplify app development, offering everything from weather data and news to AI capabilities and geolocation.]]></summary></entry><entry><title type="html">Cool icons for github profile</title><link href="http://localhost:4000/blog/cool-icons-for-github-profile" rel="alternate" type="text/html" title="Cool icons for github profile" /><published>2024-10-08T00:00:00+02:00</published><updated>2024-10-08T00:00:00+02:00</updated><id>http://localhost:4000/blog/cool-icons-for-github-profile</id><content type="html" xml:base="http://localhost:4000/blog/cool-icons-for-github-profile"><![CDATA[<p>Icons8 is a platform that offers a vast collection of icons for personal and commercial projects, 
-available in various styles and formats. All icons can be used for free, making them an ideal resource 
-for designers and developers looking to enhance the visual appeal of social media profiles, presentations, 
-and websites.</p>
-
-<hr />
-
-<p><b>Icons for your profile and projects: Icons8</b></p>
-
-<p>In modern design and visual content, <i>icons</i> play an important role. They help convey information quickly and effectively while adding aesthetic value. One of the best resources for finding quality icons is the website <b>Icons8</b>.</p>
-
-<p>Icons8 is a platform offering a vast collection of icons that can be used for both personal and commercial projects. All icons are available in various styles and formats, making it easy to find the right fit for your design.</p>
-
-<p>One of the main advantages of Icons8 is the ability to <strong>use icons for free</strong>. You don’t need to worry about licenses or copyrights—just pick your favorite icon and download it. All icons are available in various formats, including PNG, SVG, PDF, and others.</p>
-
-<p><b>How to use these icons</b></p>
-
-<p><b>- Profile customization</b>: Create a unique visual style for your social media or blogs. Adding icons will make your profile more attractive and memorable.</p>
-
-<p><b>- Creating presentations</b>: Icons can help make your presentations more visually engaging and understandable. You can use them to highlight points, illustrate ideas, or simply enhance the overall slide design.</p>
-
-<p><b>- Website development</b>: If you’re creating a website or web application, icons can be a great addition to the interface. They help users navigate the site more easily and improve the overall user experience.</p>
-
-<p><img src="/assets/images/posts/2024/00001-1.png" alt="Github profile icons" /></p>
-
-<p>To start using icons from Icons8, simply visit <a href="https://icons8.com">icons8.com</a> and use the search feature to find the icons you need. You can filter the results by style, color, and other parameters to find exactly what you’re looking for.</p>
-
-<p>Icons8 is a great tool for any designer, developer, or even casual user who wants to improve the visual appeal of their projects. Don’t miss the chance to make your profiles and work more attractive with free icons!</p>
-
-<p><b>Download and start using icons today!</b></p>
-
-<p>You can check out these icons in my GitHub profile - <a href="https://github.com/s-rb">github.com/s-rb</a></p>]]></content><author><name></name></author><category term="icons" /><category term="post" /><category term="github" /><category term="profile" /><summary type="html"><![CDATA[Icons8 is a free resource offering a vast collection of icons in various styles and formats, perfect for enhancing the visual appeal of projects, presentations, and social media profiles]]></summary></entry></feed>
+These 25 APIs offer a wide range of capabilities for developers, enabling the creation of innovative applications that integrate diverse data and functionality. Use them to enhance your projects and make them more interactive. <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji></p>]]></content><author><name></name></author><category term="api" /><category term="post" /><category term="developer" /><category term="free" /><summary type="html"><![CDATA[Here is a collection of 25 powerful free APIs that developers can leverage in 2024 to simplify app development, offering everything from weather data and news to AI capabilities and geolocation.]]></summary></entry></feed>
