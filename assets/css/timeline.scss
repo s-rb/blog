@@ -1,0 +1,226 @@
+// Переменные
+$baloon-color: #dcdcdc;
+$main-color: #4169e1;
+$dark-color: #363636;
+$timeline-width: 4px;
+$circle-size: 16px;
+$media-breakpoint-sm: 767px;
+$media-breakpoint-md: 999px;
+$media-breakpoint-xs: 499px;
+$media-breakpoint-xxs: 399px;
+
+// Миксин для медиа-запросов
+@mixin media($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+.timeline {
+    @include media($media-breakpoint-sm) {
+            justify-content: center;
+            display: flex;
+        }
+    }
+
+/* Основной контейнер таймлайна */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 40px 0;
+  padding-left: 0;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    background-color: $dark-color;
+    position: absolute;
+    left: 50%;
+    width: $timeline-width;
+    height: 100%;
+    transform: translateX(-50%); /* Центрирование линии */
+
+    /* Для мобильных устройств */
+    @include media($media-breakpoint-sm) {
+        left: 0%;
+    }
+  }
+}
+
+/* Список таймлайна */
+.timeline-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  margin-left: 0em !important;
+  display: flex !important;
+  flex-direction: column;
+}
+
+  /* Для нечетных элементов */
+.timeline-item:nth-child(even) {
+    align-self: flex-start;
+    padding-right: 30px;
+    justify-content: flex-end;
+
+    @include media($media-breakpoint-sm) {
+        align-self: flex-end;
+            justify-content: flex-start;
+            padding-left: 30px;
+      }
+}
+
+/* Для четных элементов */
+.timeline-item:nth-child(odd) {
+    align-self: flex-end;
+    justify-content: flex-start;
+    padding-left: 30px;
+}
+
+/* Элемент списка таймлайна */
+.timeline-item {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  margin: 10px 0;
+  width: 50%;
+  list-style: none;
+
+  /* Для мобильных устройств */
+  @include media($media-breakpoint-sm) {
+    width: 100%;
+    padding-left: 5rem;
+    justify-content: flex-start;
+  }
+
+  @include media($media-breakpoint-xs) {
+    width: 100%;
+    padding-left: 3rem;
+  }
+}
+
+.timeline-item-content a::after {
+    content: '►';
+    font-size: 0.7rem;
+}
+
+/* Для нечетных элементов (слева) */
+.timeline-item:nth-child(odd) .timeline-item-content {
+    text-align: left !important;
+
+    &::after {
+        left: -7px;
+        right: auto;
+    }
+}
+
+/* Контент внутри элемента таймлайна */
+.timeline-item-content {
+  padding: 16px;
+  position: relative;
+  width: 400px;
+  max-width: 70%;
+  text-align: right !important;
+  border-radius: 15px;
+  background-color: $dark-color;
+
+  /* Стрелка у блока */
+  &::after {
+    content: '';
+    background-color: $dark-color;
+    position: absolute;
+    right: -7px;
+    top: calc(50% - 7px);
+    transform: rotate(45deg);
+    width: 14px;
+    height: 14px;
+  }
+
+  @include media($media-breakpoint-sm) {
+          text-align: left !important;
+          max-width: 100%;
+
+          &::after {
+              left: -7px;
+              right: auto;
+              }
+          }
+
+  @include media($media-breakpoint-xs) {
+        text-align: left !important;
+        max-width: 70%;
+
+        &::after {
+            left: -7px;
+            right: auto;
+            }
+        }
+}
+
+/* Для нечетных элементов (слева) */
+.timeline-item:nth-child(odd) .circle {
+    right: auto;
+    left: -38px;
+}
+
+/* Стили для кружков */
+.circle {
+  background-color: #fff;
+  border: 2px solid $dark-color;
+  border-radius: 50%;
+  position: absolute;
+  top: calc(50% - 10px);
+  right: -38px;
+  width: $circle-size;
+  height: $circle-size;
+  z-index: 100;
+
+  /* Для мобильных устройств */
+  @include media($media-breakpoint-sm) {
+    right: auto !important;
+    left: -38px;
+  }
+}
+
+.timeline-position {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 16px;
+}
+
+/* Скрываем элементы нерелевантного опыта по умолчанию */
+.not-relevant {
+    display: none;
+}
+
+.not-relevant-sum {
+    display: flex;
+}
+
+/* Стили для кнопки */
+.timeline-toggle-button {
+    cursor: pointer;
+    line-height: 20px;
+    width: 10rem;
+    padding: 4px;
+    transition: all 0.25s ease;
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.timeline-hr {
+    background-color: $dark-color;
+    width: 75%;
+    position: relative;
+    z-index: 1;
+}
+
+.engineering-experience-msg {
+    background-color: #fff;
+    z-index: 2;
+    width: 100%;
+    margin: 5px;
+}
