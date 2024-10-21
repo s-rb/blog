@@ -1,0 +1,74 @@
+.cv-description {
+    text-align: justify;
+}
+
+.cv-core-competencies {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    list-style: none !important;
+    padding: 1em;
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    @media (max-width: 599px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.cv-core-competencies li {
+    margin: 2px !important;
+}
+
+.cv-experience-header {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+}
+
+.cv-position {
+    text-align: left;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding-top: 5px;
+}
+
+.cv-experience-period {
+    font-size: .8rem;
+    font-style: italic;
+    padding-bottom: 10px;
+    padding-top: 0px;
+    text-align: right;
+    align-self: center;
+}
+
+.cv-company {
+    font-size: 1.2rem;
+    padding-top: 5px;
+    text-align: left;
+}
+
+.cv-experience-period-diff {
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding-top: 5px;
+    align-self: center;
+    text-align: right;
+}
+
+.cv-description {
+    margin: 0px !important;
+    padding: 0 0 10px 10px;
+    text-align: justify;
+}
+
+.cv-education-header {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+}
+
+.cv-summary {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: justify;
+}
