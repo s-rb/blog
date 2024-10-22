@@ -2,16 +2,31 @@
 title: CV
 layout: page
 ---
+<h1>Roman Surkov</h1>
 
-<h1>
-{{site.data.work_experience.job-title}}
-</h1>
+<div class="container has-text-centered column is-full is-size-3">
+{% if site.linkedin_username %}
+<a href="http://www.linkedin.com/in/{{site.linkedin_username}}" target="_blank" class="has-text-black"><i class="fab fa-linkedin"></i></a>
+{% endif %}
+{% if site.github_username %}
+<a href="http://www.github.com/{{site.github_username}}" target="_blank" class="has-text-black"><i class="fab fa-github"></i></a>
+{% endif %}
+{% if site.telegram_username %}
+<a href="https://t.me/{{site.telegram_username}}" target="_blank" class="has-text-black"><i class="fab fa-telegram"></i></a>
+{% endif %}
+{% if site.leetcode_username %}
+<a href="https://leetcode.com/u/{{site.leetcode_username}}" target="_blank" class="has-text-black"><i class="fa fa-code"></i></a>
+{% endif %}
+{% if site.devto_username %}
+<a href="https://dev.to/{{site.devto_username}}" target="_blank" class="has-text-black"><i class="fab fa-dev"></i></a>
+{% endif %}
+</div>
+
+<h1>{{site.data.work_experience.job-title}}</h1>
 
 {% for item in site.data.work_experience.description %}
 <p class="cv-description">{{item}}</p>
 {% endfor %}
-
----
 
 <h2>
 Core competencies
@@ -22,8 +37,6 @@ Core competencies
     <li>{{item}}</li>
 {% endfor %}
 </ul>
-
----
 
 <h2>
 Professional experience
